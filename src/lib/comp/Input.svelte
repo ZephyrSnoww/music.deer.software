@@ -2,7 +2,7 @@
   import type { HTMLInputTypeAttribute } from "svelte/elements";
 
   let {
-    value,
+    value = $bindable(),
     type = "text",
     placeholder
   }: {
@@ -12,7 +12,7 @@
   } = $props();
 </script>
 
-<input type="text" bind:value={value} {placeholder}>
+<input {type} bind:value={value} {placeholder}>
 
 <style>
   input {
