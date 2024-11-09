@@ -31,8 +31,8 @@
     background: var(--jet);
     color: var(--smoke);
     padding: 0 0.25em;
-    border-radius: 3px;
-    box-shadow: 0px 0px 0px var(--lime);
+    border-radius: 0.2em;
+    /* box-shadow: 0px 0px 0px var(--lime); */
     filter: brightness(0.75);
 
     transition: var(--default-transition);
@@ -40,12 +40,12 @@
   }
 
   input:hover {
-    box-shadow: -1px 0px 0px var(--lime);
+    /* box-shadow: -1px 0px 0px var(--lime); */
     filter: brightness(0.85);
   }
 
   input:focus {
-    box-shadow: -3px 0px 0px var(--lime);
+    /* box-shadow: -3px 0px 0px var(--lime); */
     filter: brightness(1);
   }
 </style>
