@@ -2,11 +2,13 @@
   let {
     children,
     value = $bindable(),
-    options
+    options,
+    onchange = () => {}
   }: {
     children: () => any;
     value?: string;
     options: string[];
+    onchange?: (v: string) => any;
   } = $props();
 
   let open = $state(false);
@@ -43,7 +45,7 @@
   {#if open}
     <div class="options-container" style:width={`${longestOption + 4}ch`}>
       {#each options as option}
-        <button class="option" onclick={() => { value = option; }}>{option}</button>
+        <button class="option" onclick={() => { value = option; onchange(option); }}>{option}</button>
       {/each}
     </div>
   {/if}
