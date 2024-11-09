@@ -32,7 +32,7 @@
     background: var(--background);
     color: var(--color);
     padding: var(--padding);
-    border-radius: 3px;
+    border-radius: 0.2em;
     cursor: pointer;
     filter: brightness(0.7);
 
