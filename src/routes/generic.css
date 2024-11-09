@@ -28,6 +28,12 @@ body {
 
 a {
   color: var(--lime);
+  filter: brightness(0.7);
+  transition: var(--default-transition) filter;
+}
+
+a:hover {
+  filter: brightness(1);
 }
 
 h1, h2, h3, h4, p {
