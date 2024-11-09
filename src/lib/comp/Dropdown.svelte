@@ -29,23 +29,25 @@
   }
 }} />
 
-<button
-  class="dropdown-button"
-  id={dropdownId}
-  style:width={`${longestOption + 4}ch`}
-  onclick={() => { open = !open; }}
->
-  <span id={dropdownId}>{@render children()}</span>
-  <span id={dropdownId} class="icon">{open ? "expand_less" : "expand_more"}</span>
-</button>
+<div class="dropdown-container">
+  <button
+    class="dropdown-button"
+    id={dropdownId}
+    style:width={`${longestOption + 4}ch`}
+    onclick={() => { open = !open; }}
+  >
+    <span id={dropdownId}>{@render children()}</span>
+    <span id={dropdownId} class="icon">{open ? "expand_less" : "expand_more"}</span>
+  </button>
 
-{#if open}
-  <div class="options-container" style:width={`${longestOption + 4}ch`}>
-    {#each options as option}
-      <button class="option" onclick={() => { value = option; }}>{option}</button>
-    {/each}
-  </div>
-{/if}
+  {#if open}
+    <div class="options-container" style:width={`${longestOption + 4}ch`}>
+      {#each options as option}
+        <button class="option" onclick={() => { value = option; }}>{option}</button>
+      {/each}
+    </div>
+  {/if}
+</div>
 
 <style>
   button {
@@ -73,6 +75,10 @@
     filter: brightness(1);
   }
 
+  .dropdown-container {
+    position: relative;
+  }
+
   .dropdown-button {
     background: var(--jet);
     color: var(--smoke);
@@ -89,6 +95,8 @@
     overflow: hidden;
     overflow-y: scroll;
     max-height: 25vh;
+    position: absolute;
+    top: 100%;
   }
 
   .option {
