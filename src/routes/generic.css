@@ -1,0 +1,35 @@
+:root {
+  --black: #111111;
+  --jet: #333333;
+  --smoke: #f2f2f2;
+  --lime: #ccff00;
+  --blue: #002642;
+
+  --default-ease: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --default-transition: 0.5s var(--default-ease);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: var(--lime);
+  color: var(--black);
+}
+
+body {
+  background: var(--black);
+  color: var(--smoke);
+  font-family: "Alpino", sans-serif;
+  font-size: 1.75vh;
+  margin: 0;
+}
+
+a {
+  color: var(--lime);
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
