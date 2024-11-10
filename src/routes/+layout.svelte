@@ -4,6 +4,7 @@
   import "./generic.css";
 
   import Nav from "./Nav.svelte";
+  import Subnav from "./Subnav.svelte";
 
   let { children } = $props();
 </script>
@@ -16,9 +17,9 @@
   </div>
 
   <div id="content-container">
-    <div id="subnav">
-      {state.subnav}
-    </div>
+    {#if state.subnav}
+      <Subnav />
+    {/if}
 
     <div id="content">
       {@render children()}
@@ -53,17 +54,6 @@
   #content-container {
     position: relative;
     overflow: hidden;
-  }
-
-  #subnav {
-    position: absolute;
-    width: 15em;
-    height: calc(100% - 4em);
-    border-radius: 0.3em;
-    background: black;
-    left: 0.5em;
-    bottom: 0.5em;
-    overflow-y: scroll;
   }
 
   #content {
