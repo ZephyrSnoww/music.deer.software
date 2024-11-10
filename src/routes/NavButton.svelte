@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fade } from "svelte/transition";
+  import { fadeTransitionIn, fadeTransitionOut } from "$lib/animations";
 
   let {
     children,
@@ -21,14 +21,14 @@
     <a
       {href}
       {onclick}
-      class="icon"
+      class="nav-button-content icon"
       onmouseenter={() => { hovered = true; }}
       onmouseleave={() => { hovered = false; }}
     >{@render children()}</a>
   {:else}
     <button
       {onclick}
-      class="icon"
+      class="nav-button-content icon"
       onmouseenter={() => { hovered = true; }}
       onmouseleave={() => { hovered = false; }}
     >
@@ -37,7 +37,7 @@
   {/if}
 
   {#if hovered}
-    <div class="nav-label" transition:fade>{label}</div>
+    <div class="nav-label" in:fadeTransitionIn out:fadeTransitionOut>{label}</div>
   {/if}
 </div>
 
