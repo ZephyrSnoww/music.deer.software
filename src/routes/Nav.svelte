@@ -14,14 +14,30 @@
   <NavButton
     label="Playlists"
     onclick={() => {
-      state.subnav = "playlists";
+      if (state.subnav) {
+        state.subnav = "";
+        setTimeout(() => {
+          state.subnav = "playlists";
+        }, 300);
+      }
+      else {
+        state.subnav = "playlists";
+      }
     }}>list</NavButton
   >
 
   <NavButton
     label="Tags"
     onclick={() => {
-      state.subnav = "tags";
+      if (state.subnav) {
+        state.subnav = "";
+        setTimeout(() => {
+          state.subnav = "tags";
+        }, 300);
+      }
+      else {
+        state.subnav = "tags";
+      }
     }}>tag</NavButton
   >
 
