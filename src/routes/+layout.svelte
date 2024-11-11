@@ -4,6 +4,7 @@
   import "./generic.css";
 
   import Nav from "./Nav.svelte";
+  import Search from "./Search.svelte";
   import Subnav from "./Subnav.svelte";
 
   let { children } = $props();
@@ -12,9 +13,7 @@
 <div id="app">
   <Nav />
 
-  <div id="search">
-    Search
-  </div>
+  <Search />
 
   <div id="content-container">
     {#if state.subnav}
@@ -44,7 +43,7 @@
       "playbar playbar";
   }
 
-  #search, #content-container, #playbar {
+  #content-container, #playbar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,10 +63,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-  }
-
-  #search {
-    background: black;
   }
 
   #playbar {
