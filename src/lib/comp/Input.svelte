@@ -15,8 +15,12 @@
 <input {type} bind:value={value} {placeholder}>
 
 <style>
+  :root {
+    --width: unset;
+    --font-size: unset;
+  }
+
   input {
-    font-size: unset;
     font-family: unset;
     color: unset;
     background: unset;
@@ -25,7 +29,6 @@
     margin: unset;
     padding: unset;
     min-width: unset;
-    width: unset;
     outline: none;
 
     background: var(--jet);
@@ -34,6 +37,9 @@
     border-radius: 0.2em;
     /* box-shadow: 0px 0px 0px var(--lime); */
     filter: brightness(0.75);
+
+    font-size: var(--font-size);
+    width: var(--width);
 
     transition: var(--default-transition);
     transition-property: box-shadow, filter;
