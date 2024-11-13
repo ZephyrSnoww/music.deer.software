@@ -4,6 +4,7 @@
   import "./generic.css";
 
   import Nav from "./Nav.svelte";
+    import Playbar from "./Playbar.svelte";
   import Search from "./Search.svelte";
   import Subnav from "./Subnav.svelte";
 
@@ -25,9 +26,7 @@
     </div>
   </div>
 
-  <div id="playbar">
-    Playbar
-  </div>
+  <Playbar />
 </div>
 
 <style>
@@ -43,7 +42,7 @@
       "playbar playbar";
   }
 
-  #content-container, #playbar {
+  #content-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,10 +62,5 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-  }
-
-  #playbar {
-    grid-area: playbar;
-    background: black;
   }
 </style>
