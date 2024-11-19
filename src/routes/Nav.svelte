@@ -1,12 +1,11 @@
 <script>
-  import { state } from "$lib/state.svelte";
+  import { appState } from "$lib/state.svelte";
   import NavButton from "./NavButton.svelte";
 </script>
 
 <!-- TODO Add subnav toggleability (probably using stores?) -->
 
 <div id="nav">
-
   <a id="logo" href="/">
     <img src="/favicon-outlined.png" alt="" />
   </a>
@@ -14,14 +13,13 @@
   <NavButton
     label="Playlists"
     onclick={() => {
-      if (state.subnav) {
-        state.subnav = "";
+      if (appState.subnav) {
+        appState.subnav = "";
         setTimeout(() => {
-          state.subnav = "playlists";
+          appState.subnav = "playlists";
         }, 300);
-      }
-      else {
-        state.subnav = "playlists";
+      } else {
+        appState.subnav = "playlists";
       }
     }}>list</NavButton
   >
@@ -29,14 +27,13 @@
   <NavButton
     label="Tags"
     onclick={() => {
-      if (state.subnav) {
-        state.subnav = "";
+      if (appState.subnav) {
+        appState.subnav = "";
         setTimeout(() => {
-          state.subnav = "tags";
+          appState.subnav = "tags";
         }, 300);
-      }
-      else {
-        state.subnav = "tags";
+      } else {
+        appState.subnav = "tags";
       }
     }}>tag</NavButton
   >

@@ -1,3 +1,3 @@
-export const state = $state({
+export const appState = $state({
   subnav: ""
 });

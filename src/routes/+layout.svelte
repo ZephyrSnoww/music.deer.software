@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { state } from "$lib/state.svelte";
+  import { appState } from "$lib/state.svelte";
   import "./fonts.css";
   import "./generic.css";
 
   import Nav from "./Nav.svelte";
-    import Playbar from "./Playbar.svelte";
+  import Playbar from "./Playbar.svelte";
   import Search from "./Search.svelte";
   import Subnav from "./Subnav.svelte";
 
@@ -17,7 +17,7 @@
   <Search />
 
   <div id="content-container">
-    {#if state.subnav}
+    {#if appState.subnav}
       <Subnav />
     {/if}
 

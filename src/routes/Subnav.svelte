@@ -1,20 +1,22 @@
 <script lang="ts">
   import { subnavTransitionIn, subnavTransitionOut } from "$lib/animations";
-  import { state } from "$lib/state.svelte";
+  import { appState } from "$lib/state.svelte";
 </script>
 
-<svelte:document onclick={(e: Event) => {
-  if (
-    state.subnav && 
-    // @ts-expect-error Typing for HTML events sucks ass
-    !e.target?.className.includes("nav")
-) {
-    state.subnav = "";
-  }
-}} />
+<svelte:document
+  onclick={(e: Event) => {
+    if (
+      appState.subnav &&
+      // @ts-expect-error Typing for HTML events sucks ass
+      !e.target?.className.includes("nav")
+    ) {
+      appState.subnav = "";
+    }
+  }}
+/>
 
 <div id="subnav" class="subnav" in:subnavTransitionIn out:subnavTransitionOut>
-  {state.subnav}
+  {appState.subnav}
 </div>
 
 <style>
