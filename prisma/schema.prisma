@@ -4,5 +4,116 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url = env("file:./db.sqlite")
+  url      = "file:./db.sqlite"
+}
+
+// ========== USER DATA ==========
+model user {
+  id          Int          @id @default(autoincrement())
+  username    String       @unique
+  displayName String
+  credentials credentials?
+
+  favorites song[] @relation(name: "favorites")
+
+  ownedPlaylists    playlist[] @relation(name: "playlistOwner")
+  editablePlaylists playlist[]
+  uploadedSongs     song[]
+  tags              tag[]
+  ratings           rating[]
+  playData          playData[]
+}
+
+model credentials {
+  id       Int    @id @default(autoincrement())
+  password String
+  token    String
+  userId   Int    @unique
+  user     user   @relation(fields: [userId], references: [id])
+}
+
+// ========== SORTING DATA ==========
+model playlist {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  ownerId Int
+  owner   user @relation(name: "playlistOwner", fields: [ownerId], references: [id])
+
+  editors user[]
+
+  songs song[]
+}
+
+model tag {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  ownerId Int
+  owner   user @relation(fields: [ownerId], references: [id])
+
+  songs song[]
+}
+
+// ========== SONG DATA ==========
+model song {
+  id          Int      @id @default(autoincrement())
+  filename    String
+  title       String
+  releaseDate DateTime
+  discNumber  Int
+  trackNumber Int
+  gain        Float
+
+  albumId Int
+  album   album @relation(fields: [albumId], references: [id])
+
+  artists artist[]
+
+  uploaderId Int
+  uploader   user @relation(fields: [uploaderId], references: [id])
+
+  playlists   playlist[]
+  tags        tag[]
+  favoritedBy user[]     @relation(name: "favorites")
+  ratings     rating[]
+  playData    playData[]
+}
+
+model artist {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  songs song[]
+}
+
+model album {
+  id          Int      @id @default(autoincrement())
+  name        String
+  releaseDate DateTime
+  compilation Boolean
+
+  tracks song[]
+}
+
+// ========== METADATA ==========
+model rating {
+  id     Int @id @default(autoincrement())
+  rating Int
+
+  user   user @relation(fields: [userId], references: [id])
+  song   song @relation(fields: [songId], references: [id])
+  userId Int
+  songId Int
+}
+
+model playData {
+  id         Int      @id @default(autoincrement())
+  playCount  Int
+  lastPlayed DateTime
+
+  user   user @relation(fields: [userId], references: [id])
+  song   song @relation(fields: [songId], references: [id])
+  userId Int
+  songId Int
 }
