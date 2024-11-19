@@ -40,6 +40,11 @@
 
   <NavButton href="/songs" label="Songs">music_note</NavButton>
   <NavButton href="/artists" label="Artists">person</NavButton>
+
+  <div class="spacer"></div>
+
+  <NavButton href="/upload" label="Upload">upload</NavButton>
+  <NavButton href="/settings" label="Settings">settings</NavButton>
 </div>
 
 <style>
@@ -80,5 +85,14 @@
   #nav > *:hover {
     background: #0a0a0a;
     filter: brightness(1);
+  }
+
+  .spacer {
+    flex: 1 0;
+  }
+
+  .spacer:hover {
+    background: black !important;
+    filter: brightness(0.7) !important;
   }
 </style>
