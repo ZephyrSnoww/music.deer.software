@@ -33,6 +33,7 @@
   #app {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 3em auto;
     grid-template-rows: 3em auto 4em;
