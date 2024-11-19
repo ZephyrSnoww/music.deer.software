@@ -5,7 +5,7 @@
     children,
     onclick,
     label,
-    href
+    href,
   }: {
     children: () => any;
     onclick?: (e: Event) => any;
@@ -22,22 +22,32 @@
       {href}
       {onclick}
       class="nav-button-content icon"
-      onmouseenter={() => { hovered = true; }}
-      onmouseleave={() => { hovered = false; }}
-    >{@render children()}</a>
+      onmouseenter={() => {
+        hovered = true;
+      }}
+      onmouseleave={() => {
+        hovered = false;
+      }}>{@render children()}</a
+    >
   {:else}
     <button
       {onclick}
       class="nav-button-content icon"
-      onmouseenter={() => { hovered = true; }}
-      onmouseleave={() => { hovered = false; }}
+      onmouseenter={() => {
+        hovered = true;
+      }}
+      onmouseleave={() => {
+        hovered = false;
+      }}
     >
       {@render children()}
     </button>
   {/if}
 
   {#if hovered}
-    <div class="nav-label" in:fadeTransitionIn out:fadeTransitionOut>{label}</div>
+    <div class="nav-label" in:fadeTransitionIn out:fadeTransitionOut>
+      {label}
+    </div>
   {/if}
 </div>
 
@@ -51,7 +61,8 @@
     justify-content: center;
   }
 
-  button, a {
+  button,
+  a {
     font-size: 2em;
     text-decoration: none;
     color: unset;
@@ -66,7 +77,8 @@
     justify-content: center;
   }
 
-  .nav-button:hover a, .nav-button:hover button {
+  .nav-button:hover a,
+  .nav-button:hover button {
     background: #0a0a0a;
     filter: brightness(1);
   }

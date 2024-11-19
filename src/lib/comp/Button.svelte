@@ -2,7 +2,7 @@
   let {
     children,
     onclick,
-    icon = false
+    icon = false,
   }: {
     children: () => any;
     onclick?: (e: Event) => any;

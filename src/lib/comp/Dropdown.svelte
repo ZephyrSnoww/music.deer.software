@@ -3,7 +3,7 @@
     children,
     value = $bindable(),
     options,
-    onchange = () => {}
+    onchange = () => {},
   }: {
     children: () => any;
     value?: string;
@@ -24,28 +24,42 @@
   let dropdownId = `dropdown-${Math.floor(Math.random() * 9999)}`;
 </script>
 
-<svelte:document onclick={(e: Event) => {
-  // @ts-expect-error Typing for HTML events sucks ass
-  if (open && e.target?.id != dropdownId) {
-    open = false;
-  }
-}} />
+<svelte:document
+  onclick={(e: Event) => {
+    // @ts-expect-error Typing for HTML events sucks ass
+    if (open && e.target?.id != dropdownId) {
+      open = false;
+    }
+  }}
+/>
 
 <div class="dropdown-container">
   <button
     class="dropdown-button"
     id={dropdownId}
     style:width={`${longestOption + 4}ch`}
-    onclick={() => { open = !open; }}
+    onclick={() => {
+      open = !open;
+    }}
   >
     <span id={dropdownId}>{@render children()}</span>
-    <span id={dropdownId} class="icon">{open ? "expand_less" : "expand_more"}</span>
+    <span id={dropdownId} class="icon">
+      {open ? "expand_less" : "expand_more"}
+    </span>
   </button>
 
   {#if open}
     <div class="options-container" style:width={`${longestOption + 4}ch`}>
       {#each options as option}
-        <button class="option" onclick={() => { value = option; onchange(option); }}>{option}</button>
+        <button
+          class="option"
+          onclick={() => {
+            value = option;
+            onchange(option);
+          }}
+        >
+          {option}
+        </button>
       {/each}
     </div>
   {/if}

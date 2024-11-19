@@ -4,7 +4,7 @@
   let {
     value = $bindable(),
     type = "text",
-    placeholder
+    placeholder,
   }: {
     value?: string;
     type?: HTMLInputTypeAttribute;
@@ -12,7 +12,7 @@
   } = $props();
 </script>
 
-<input {type} bind:value={value} {placeholder}>
+<input {type} bind:value {placeholder} />
 
 <style>
   :root {
