@@ -1,12 +1,11 @@
 <script lang="ts">
   import { appState } from "$lib/state.svelte";
-  import "./fonts.css";
   import "./generic.css";
 
-  import Nav from "./Nav.svelte";
-  import Playbar from "./Playbar.svelte";
-  import Search from "./Search.svelte";
-  import Subnav from "./Subnav.svelte";
+  import Nav from "$lib/comp/layout/Nav.svelte";
+  import Playbar from "$lib/comp/layout/Playbar.svelte";
+  import Search from "$lib/comp/layout/Search.svelte";
+  import Subnav from "$lib/comp/layout/Subnav.svelte";
 
   let { children } = $props();
 </script>

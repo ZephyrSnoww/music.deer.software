@@ -1,15 +1,13 @@
+<script lang="ts">
+  import PlaybarSongInfo from "./PlaybarSongInfo.svelte";
+</script>
+
 <div id="playbar">
-  <div id="song-info">
-    Song Info
-  </div>
+  <PlaybarSongInfo />
 
-  <div id="playback-controls">
-    Playback Controls
-  </div>
+  <div id="playback-controls">Playback Controls</div>
 
-  <div id="action-buttons">
-    Song Actions
-  </div>
+  <div id="action-buttons">Song Actions</div>
 </div>
 
 <style>
@@ -19,10 +17,6 @@
     grid-template-columns: auto 25em auto;
     align-items: center;
     background: black;
-  }
-
-  #song-info {
-    display: flex;
   }
 
   #playback-controls {
