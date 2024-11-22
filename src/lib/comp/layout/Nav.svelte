@@ -60,6 +60,7 @@
   #logo {
     width: 3em !important;
     border-bottom-right-radius: 0.25em;
+    z-index: 50;
   }
 
   #logo img {
