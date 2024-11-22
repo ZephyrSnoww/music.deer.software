@@ -40,10 +40,11 @@
     height: 100%;
     padding: 0.5em;
     gap: 0.5em;
+    flex: 0 0 25vw;
   }
 
   #song-cover {
-    height: 3em;
+    height: 3.5em;
     aspect-ratio: 1;
   }
 
