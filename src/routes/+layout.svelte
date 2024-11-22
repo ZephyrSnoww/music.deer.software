@@ -35,7 +35,7 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 3em auto;
-    grid-template-rows: 3em auto 4em;
+    grid-template-rows: 3em auto 4.5em;
     grid-template-areas:
       "nav search"
       "nav content"
