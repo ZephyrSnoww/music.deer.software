@@ -9,5 +9,5 @@ export interface ClientData {
     ratings: true,
     tags: true,
     uploadedSongs: true
-  }}>;
+  }}> | null;
 }
