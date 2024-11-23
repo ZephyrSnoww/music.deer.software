@@ -60,6 +60,7 @@
     width: 33%;
     height: 100%;
     background: var(--lime);
+    border-radius: 0.2em;
   }
 
   .time-text {
