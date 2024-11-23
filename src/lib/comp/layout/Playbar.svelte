@@ -1,4 +1,5 @@
 <script lang="ts">
+  import PlaybarActions from "./PlaybarActions.svelte";
   import PlaybarControls from "./PlaybarControls.svelte";
   import PlaybarSongInfo from "./PlaybarSongInfo.svelte";
 </script>
@@ -8,7 +9,7 @@
 
   <PlaybarControls />
 
-  <div id="action-buttons">Song Actions</div>
+  <PlaybarActions />
 </div>
 
 <style>
@@ -18,11 +19,5 @@
     grid-template-columns: 25em auto 25em;
     align-items: center;
     background: black;
-  }
-
-  #action-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
   }
 </style>
