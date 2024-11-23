@@ -1,6 +1,6 @@
 <script lang="ts">
   import { appState } from "$lib/state.svelte";
-  import "./generic.css";
+  import "../generic.css";
 
   import Nav from "$lib/comp/layout/Nav.svelte";
   import Playbar from "$lib/comp/layout/Playbar.svelte";
