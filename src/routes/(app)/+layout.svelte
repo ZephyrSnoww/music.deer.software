@@ -1,5 +1,8 @@
 <script lang="ts">
+  import type { ClientData } from "$lib/types";
   import { appState } from "$lib/state.svelte";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
   import "../generic.css";
 
   import Nav from "$lib/comp/layout/Nav.svelte";
@@ -7,7 +10,13 @@
   import Search from "$lib/comp/layout/Search.svelte";
   import Subnav from "$lib/comp/layout/Subnav.svelte";
 
-  let { children } = $props();
+  let { children, data }: { children: () => any; data: ClientData } = $props();
+
+  onMount(() => {
+    if (!data.account) {
+      goto("/login");
+    }
+  });
 </script>
 
 <div id="app">
