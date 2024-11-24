@@ -26,7 +26,6 @@ export async function load() {
       });
     }
 
-    console.log(fileData);
     return { unsortedFiles: fileData };
   } catch (error) {
     return
