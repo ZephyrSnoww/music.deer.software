@@ -1,5 +1,7 @@
 node_modules
 
+music/
+
 prisma/db.sqlite
 prisma/db.sqlite-journal
 prisma/migrations
