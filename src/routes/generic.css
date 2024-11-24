@@ -4,6 +4,7 @@
   --smoke: #f2f2f2;
   --lime: #ccff00;
   --blue: #002642;
+  --red: #f52d2d;
 
   --default-ease: cubic-bezier(0.075, 0.82, 0.165, 1);
   --default-transition: 0.5s var(--default-ease);
