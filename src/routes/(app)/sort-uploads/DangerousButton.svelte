@@ -8,7 +8,7 @@
   } = $props();
 
   let takingAction = $state(false);
-  let clicksLeft = $state(5);
+  let clicksLeft = $state(3);
 </script>
 
 <button onclick={(e) => {
