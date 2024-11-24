@@ -46,6 +46,7 @@
   #song-cover {
     height: 3.5em;
     aspect-ratio: 1;
+    object-fit: cover;
   }
 
   #song-text {
