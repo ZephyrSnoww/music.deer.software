@@ -90,5 +90,6 @@
     padding: 0 0.25em;
     border-radius: 0.3em;
     z-index: 10;
+    text-wrap: nowrap;
   }
 </style>
