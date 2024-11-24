@@ -4,15 +4,21 @@
   let {
     value = $bindable(),
     type = "text",
+    name,
     placeholder,
+    onkeydown,
+    oninput,
   }: {
     value?: string;
     type?: HTMLInputTypeAttribute;
+    name?: string;
     placeholder?: string;
+    onkeydown?: (e: KeyboardEvent) => any;
+    oninput?: (e: Event) => any;
   } = $props();
 </script>
 
-<input {type} bind:value {placeholder} />
+<input {type} {name} bind:value {placeholder} {onkeydown} {oninput} />
 
 <style>
   :root {
@@ -21,37 +27,23 @@
   }
 
   input {
-    font-family: unset;
-    color: unset;
-    background: unset;
-    border: unset;
-    border-radius: unset;
-    margin: unset;
-    padding: unset;
-    min-width: unset;
-    outline: none;
-
     background: var(--jet);
     color: var(--smoke);
     padding: 0 0.25em;
-    border-radius: 0.2em;
-    /* box-shadow: 0px 0px 0px var(--lime); */
     filter: brightness(0.75);
+    border-radius: 0.2em;
 
     font-size: var(--font-size);
     width: var(--width);
-
     transition: var(--default-transition);
-    transition-property: box-shadow, filter;
+    transition-property: filter;
   }
 
   input:hover {
-    /* box-shadow: -1px 0px 0px var(--lime); */
     filter: brightness(0.85);
   }
 
   input:focus {
-    /* box-shadow: -3px 0px 0px var(--lime); */
     filter: brightness(1);
   }
 </style>
