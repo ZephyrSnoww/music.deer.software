@@ -46,8 +46,20 @@ export const actions = {
       try {
         const output = execSync(`yt-dlp -o "${env.LIBRARY_FOLDER}/unsorted/%(creator,uploader,channel)s - %(title,fulltitle)s.%(ext)s" -x --audio-format mp3 --embed-metadata --embed-thumbnail ${url}`);
 
-        console.log(output.toString());
+        // console.log(output.toString());
+        let filename = output.toString().match(/Adding metadata to "([^"]+)"/)?.[1];
+
+        if (!filename) {
+          return fail(500, { error: true, message: "Could not find filename" });
+        }
+
+        filename = filename.split("\\").findLast(() => true);
+        return { message: `Successfully downloaded file <code>${filename}</code> from URL. Visit the <a href="/sort-uploads">sorting page</a> and verify the tags for it to show up on the server.` };
       } catch (error: any) {
+        if (error.message.includes("is not a valid URL")) {
+          return fail(422, { error: true, message: "Invalid URL" });
+          // TODO: TRY SEARCHING?
+        }
         console.log("oops error");
         console.log(error.message);
       }
