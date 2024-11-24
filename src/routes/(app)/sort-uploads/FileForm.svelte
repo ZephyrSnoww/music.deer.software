@@ -28,6 +28,8 @@
     <img src="/placeholder-cover.png" alt="" class="cover" />
   {/if}
 
+  <input type="text" name="filename" value={file.filename} style:display="none">
+
   <!-- SONG INFO -->
   <div class="info">
     <div class="filename">{file.filename}</div>
