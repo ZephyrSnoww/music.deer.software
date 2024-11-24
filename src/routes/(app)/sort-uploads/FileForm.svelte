@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { MP3TagTags } from "mp3tag.js/types/tags";
   import LabelledInput from "./LabelledInput.svelte";
+  import DangerousButton from "./DangerousButton.svelte";
 
   let {
     file
@@ -11,9 +12,11 @@
       cover: string;
     }
   } = $props();
+
+  let action = $state("?/submit");
 </script>
 
-<form method="POST" class="file">
+<form method="POST" {action} class="file">
   <!-- COVER ART -->
   {#if file.data.v2?.APIC?.[0]}
     <img
@@ -36,7 +39,10 @@
     <LabelledInput label="Year:" name="year" placeholder="Release Year" value={file.data.v1?.year} />
   </div>
 
-  <button class="submit-button">Submit</button>
+  <div class="buttons">
+    <DangerousButton onclick={() => { action = "?/submit"; }} --background="var(--lime)">Submit</DangerousButton>
+    <DangerousButton onclick={() => { action = "?/delete"; }} --background="var(--red)">Remove</DangerousButton>
+  </div>
 </form>
 
 <style>
@@ -63,10 +69,9 @@
     gap: 0.25em;
   }
 
-  .submit-button {
+  .buttons {
     flex: 0 0 5em;
-    /* margin-left: 1em; */
-    background: var(--lime);
-    color: var(--black);
+    display: flex;
+    flex-direction: column;
   }
 </style>
