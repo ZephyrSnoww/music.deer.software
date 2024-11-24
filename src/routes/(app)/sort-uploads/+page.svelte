@@ -30,5 +30,6 @@
     gap: 0.5em;
     width: 50%;
     padding-top: 5em;
+    padding-bottom: 10em;
   }
 </style>
