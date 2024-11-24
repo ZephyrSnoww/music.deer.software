@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HTMLInputTypeAttribute } from "svelte/elements";
-    import Input from "./Input.svelte";
+    import Input from "../../../lib/comp/Input.svelte";
 
   let {
     value = $bindable(),
