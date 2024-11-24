@@ -1,5 +1,10 @@
 import type { Prisma } from "@prisma/client";
 
+export interface CustomFormData {
+  message: string;
+  error?: boolean;
+}
+
 export interface ClientData {
   account?: Prisma.userGetPayload<{include: {
     editablePlaylists: true,
