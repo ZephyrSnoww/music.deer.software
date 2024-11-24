@@ -1,4 +1,5 @@
 <script lang="ts">
+  import FileForm from "./FileForm.svelte";
   import { onMount } from "svelte";
 
   const { data } = $props();
@@ -11,17 +12,7 @@
 {#if data.unsortedFiles}
   <div id="page">
     {#each data.unsortedFiles as file}
-      <div class="file">
-        {#if file.data.v2?.APIC?.[0]}
-          <img
-            src={`data:${file.data.v2!.APIC![0].format};base64,${file.cover}`}
-            alt=""
-            class="cover"
-          />
-        {:else}
-          <img src="/placeholder-cover.png" alt="" class="cover" />
-        {/if}
-      </div>
+      <FileForm {file} />
     {/each}
   </div>
 {:else}
@@ -36,5 +27,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    gap: 0.5em;
+    width: 50%;
+    padding-top: 5em;
   }
 </style>
