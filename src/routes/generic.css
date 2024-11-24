@@ -62,6 +62,19 @@ button, input {
   outline: none;
 }
 
+code {
+  padding: 0.1em 0.25em;
+  font-size: 0.9em;
+  font-family: monospace;
+  background: var(--jet);
+  border: 1px solid var(--lime);
+  border-radius: 0.2em;
+  text-wrap: nowrap;
+  display: block;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
 /* ========== FONTS ========== */
 @font-face {
   font-family: "Alpino";
