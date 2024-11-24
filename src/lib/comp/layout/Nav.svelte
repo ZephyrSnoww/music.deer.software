@@ -43,7 +43,8 @@
 
   <div class="spacer"></div>
 
-  <NavButton href="/upload" label="Upload">upload</NavButton>
+  <NavButton href="/upload" label="Add New Music">add</NavButton>
+  <NavButton href="/sort-uploads" label="Sort New Music">label</NavButton>
   <NavButton href="/settings" label="Settings">settings</NavButton>
 </div>
 
