@@ -20,15 +20,6 @@
   }
 
   button {
-    font-size: unset;
-    font-family: unset;
-    color: unset;
-    background: unset;
-    border: unset;
-    border-radius: unset;
-    margin: unset;
-    padding: unset;
-
     background: var(--background);
     color: var(--color);
     padding: var(--padding);
