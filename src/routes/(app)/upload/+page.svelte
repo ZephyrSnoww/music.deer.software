@@ -155,10 +155,4 @@
   .box > div {
     text-align: center;
   }
-
-  .checkbox-container {
-    display: flex;
-    gap: 0.25em;
-    align-items: center;
-  }
 </style>
