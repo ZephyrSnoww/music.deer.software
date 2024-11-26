@@ -44,15 +44,18 @@ export const actions = {
     // IF NO FILE WAS UPLOADED AND A URL WAS GIVEN
     if (url) {
       try {
+        // USE YT-DLP TO SAVE FILES TO UNSORTED FOLDER
         const output = execSync(`yt-dlp -o "${env.LIBRARY_FOLDER}/unsorted/%(creator,uploader,channel)s - %(title,fulltitle)s.%(ext)s" -x --audio-format mp3 --embed-metadata --embed-thumbnail ${url}`);
 
         // console.log(output.toString());
         let filename = output.toString().match(/Adding metadata to "([^"]+)"/)?.[1];
 
+        // CHECK YT-DLP SUCCEEDED JUST IN CASE
         if (!filename) {
           return fail(500, { error: true, message: "Could not find filename" });
         }
 
+        // RETURN SUCCESS
         filename = filename.split("\\").findLast(() => true);
         return { message: `Successfully downloaded file <code>${filename}</code> from URL. Visit the <a href="/sort-uploads">sorting page</a> and verify the tags for it to show up on the server.` };
       } catch (error: any) {
