@@ -28,7 +28,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0.5em;
-    width: 50%;
+    width: 60%;
     padding-top: 5em;
     padding-bottom: 10em;
   }
