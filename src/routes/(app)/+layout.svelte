@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { ClientData } from "$lib/types";
   import { appState } from "$lib/state.svelte";
-  import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import "../generic.css";
 
@@ -12,11 +11,9 @@
 
   let { children, data }: { children: () => any; data: ClientData } = $props();
 
-  onMount(() => {
-    if (!data.account) {
-      goto("/login");
-    }
-  });
+  if (!data.account) {
+    goto("/login");
+  }
 </script>
 
 <div id="app">
