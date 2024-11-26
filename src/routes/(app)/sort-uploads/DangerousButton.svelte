@@ -11,7 +11,7 @@
   let clicksLeft = $state(3);
 </script>
 
-<button onclick={(e) => {
+<button class="nostyle" onclick={(e) => {
   if (takingAction && clicksLeft <= 0 && onclick) {
     onclick(e);
     return;
