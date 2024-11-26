@@ -33,12 +33,12 @@
   <!-- SONG INFO -->
   <div class="info">
     <div class="filename">{file.filename}</div>
-    <LabelledInput label="Title:" name="title" placeholder="Title" value={file.data.v1?.title} />
-    <LabelledInput label="Album:" name="album" placeholder="Album" value={file.data.v1?.album} />
+    <LabelledInput label="Title:" name="title" placeholder="Title" value={file.data.title} />
+    <LabelledInput label="Album:" name="album" placeholder="Album (If left blank, will default to track title)" value={file.data.v1?.album} />
     <LabelledInput label="Artist(s):" name="artists" placeholder="Artist(s)" value={file.data.v1?.artist} />
-    <LabelledInput label="Genre:" name="genre" placeholder="Genre" value={file.data.v2?.TCON} />
-    <LabelledInput label="Track Number:" name="trackNum" placeholder="Track Number" value={file.data.v1?.track} />
-    <LabelledInput label="Year:" name="year" placeholder="Release Year" value={file.data.v1?.year} />
+    <!-- <LabelledInput label="Genre:" name="genre" placeholder="Genre" value={file.data.v2?.TCON} /> -->
+    <!-- <LabelledInput label="Track Number:" name="trackNum" placeholder="Track Number" value={file.data.v1?.track} /> -->
+    <!-- <LabelledInput label="Year:" name="year" placeholder="Release Year" value={file.data.v1?.year} /> -->
   </div>
 
   <div class="buttons">
