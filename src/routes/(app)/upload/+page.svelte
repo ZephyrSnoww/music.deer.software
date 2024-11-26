@@ -1,6 +1,6 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-    import Checkbox from "$lib/comp/Checkbox.svelte";
+  import Checkbox from "$lib/comp/Checkbox.svelte";
   import type { CustomFormData } from "$lib/types";
 
   let { form }: { form?: CustomFormData } = $props();
@@ -62,11 +62,15 @@
       />
 
       {#if urlIsPlaylist}
-        <Checkbox checked={false} name="createPlaylist">Create playlist</Checkbox>
+        <Checkbox checked={false} name="createPlaylist"
+          >Create playlist</Checkbox
+        >
       {/if}
 
       {#if urlIsLarge}
-        <Checkbox checked={false} name="skipSorting">Skip sorting page (may lead to incorrect metadata)</Checkbox>
+        <Checkbox checked={false} name="skipSorting"
+          >Skip sorting page (may lead to incorrect metadata)</Checkbox
+        >
       {/if}
 
       <button>Submit</button>
@@ -91,17 +95,12 @@
     {#if showWarning}
       <div class="box">
         <div>
-          The only reason this might take longer than a few seconds
-          <br />
-          is if you entered a playlist or album URL with lots of songs.
-          <br />
-          If that isn't the case and you're stuck waiting for a while,
-          <br />
-          you should probably reload the page and try again.
+          The only reason this might take longer than a few seconds is if you
+          entered a playlist or album URL. If that isn't the case and you're
+          stuck waiting for a while, you should probably reload the page and try
+          again.
           <br /><br />
-          If you <i>did</i> enter a playlist or album with lots of songs,
-          <br />
-          please be patient.
+          If you <i>did</i> enter a playlist or album URL, please be patient.
         </div>
       </div>
     {/if}
@@ -115,6 +114,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
 
   #upload {
