@@ -15,10 +15,10 @@
   </div>
 
   <div id="controls">
-    <button id="like-button" class="icon">favorite</button>
-    <button id="queue-button" class="icon">queue</button>
+    <button id="like-button" class="nostyle icon">favorite</button>
+    <button id="queue-button" class="nostyle icon">queue</button>
     <div id="volume">
-      <button id="volume-button" class="icon">volume_up</button>
+      <button id="volume-button" class="nostyle icon">volume_up</button>
       <div id="volume-slider">
         <div id="volume-slider-value"></div>
       </div>

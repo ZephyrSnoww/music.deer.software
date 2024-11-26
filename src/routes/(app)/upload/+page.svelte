@@ -1,7 +1,5 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import Button from "$lib/comp/Button.svelte";
-  import Input from "$lib/comp/Input.svelte";
   import type { CustomFormData } from "$lib/types";
 
   let { form }: { form?: CustomFormData } = $props();
@@ -28,9 +26,14 @@
       }}
     >
       <div id="title">Upload or Enter URL</div>
-      <input type="file" accept="audio/*" name="file" />
-      <Input placeholder="Enter URL" name="url" --width="35em" />
-      <Button>Submit</Button>
+      <input type="file" accept="audio/*" name="file" class="nostyle" />
+      <input
+        type="text"
+        placeholder="Enter URL"
+        name="url"
+        style:width="35em"
+      />
+      <button>Submit</button>
     </form>
 
     {#if form?.message}

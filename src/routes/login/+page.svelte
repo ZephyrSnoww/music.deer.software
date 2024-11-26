@@ -1,7 +1,5 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import Button from "$lib/comp/Button.svelte";
-  import Input from "$lib/comp/Input.svelte";
   import type { CustomFormData } from "$lib/types";
   import "../generic.css";
 
@@ -11,9 +9,9 @@
 <div id="login-page-container">
   <form method="POST" action="?/login" id="login-box" use:enhance>
     <div id="title">Log In</div>
-    <Input placeholder="Username" name="username" />
-    <Input placeholder="Password" name="password" type="password" />
-    <Button>Submit</Button>
+    <input type="text" placeholder="Username" name="username" />
+    <input type="password" placeholder="Password" name="password" />
+    <button>Submit</button>
   </form>
 
   {#if form?.error}
@@ -35,7 +33,8 @@
     gap: 1em;
   }
 
-  #login-box, #error-box {
+  #login-box,
+  #error-box {
     background: black;
     border: 1px solid var(--lime);
     border-radius: 0.5em;

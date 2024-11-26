@@ -3,13 +3,13 @@
 
 <div id="playback-controls">
   <div id="controls">
-    <button id="shuffle-button" class="icon">shuffle</button>
-    <button id="previous-button" class="icon">skip_previous</button>
-    <button id="skip-back-button" class="icon">fast_rewind</button>
-    <button id="play-button" class="icon">play_circle_filled</button>
-    <button id="skip-button" class="icon">fast_forward</button>
-    <button id="next-button" class="icon">skip_next</button>
-    <button id="repeat-button" class="icon">repeat</button>
+    <button id="shuffle-button" class="nostyle icon">shuffle</button>
+    <button id="previous-button" class="nostyle icon">skip_previous</button>
+    <button id="skip-back-button" class="nostyle icon">fast_rewind</button>
+    <button id="play-button" class="nostyle icon">play_circle_filled</button>
+    <button id="skip-button" class="nostyle icon">fast_forward</button>
+    <button id="next-button" class="nostyle icon">skip_next</button>
+    <button id="repeat-button" class="nostyle icon">repeat</button>
   </div>
 
   <div id="progress-bar-container">

@@ -49,7 +49,9 @@ p {
   font-family: "Material Icons", sans-serif;
 }
 
-button, input {
+/* REMOVE GENERICS */
+button,
+input {
   font-size: unset;
   font-family: unset;
   color: unset;
@@ -62,6 +64,45 @@ button, input {
   outline: none;
 }
 
+/* INPUT STYLING */
+input:not(.nostyle),
+.input {
+  background: var(--jet);
+  color: var(--smoke);
+  padding: 0 0.25em;
+  filter: brightness(0.75);
+  border-radius: 0.2em;
+  transition: var(--default-transition);
+  transition-property: filter;
+}
+
+input:not(.nostyle),
+.input:hover {
+  filter: brightness(0.85);
+}
+
+input:not(.nostyle),
+.input:focus {
+  filter: brightness(1);
+}
+
+/* BUTTON STYLING */
+button:not(.nostyle),
+.button {
+  background: var(--lime);
+  color: var(--black);
+  padding: 0 1em;
+  border-radius: 0.2em;
+  cursor: pointer;
+  filter: brightness(0.7);
+}
+
+button:not(.nostyle),
+.button:hover {
+  filter: brightness(1);
+}
+
+/* CODE BLOCK STYLING */
 code {
   padding: 0.1em 0.25em;
   font-size: 0.9em;

@@ -32,7 +32,7 @@
   {:else}
     <button
       {onclick}
-      class="nav-button-content icon"
+      class="nostyle nav-button-content icon"
       onmouseenter={() => {
         hovered = true;
       }}
