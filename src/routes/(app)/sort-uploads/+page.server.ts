@@ -31,3 +31,18 @@ export async function load() {
     return
   }
 }
+
+// ACTION HANDLING
+export const actions = {
+  // FILE INFO SUBMISSION
+  submit: async ({ request }) => {
+    const formData = await request.formData();
+
+    let filename = formData.get("filename") as string | null;
+  },
+
+  // FILE DELETION
+  delete: async ({ request }) => {
+
+  }
+}
