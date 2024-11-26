@@ -11,7 +11,7 @@ export const actions = {
     let url = formData.get("url") as string | null;
 
     // ERROR IF NEITHER A FILE NOR URL WERE GIVEN
-    if (!url && (!(file instanceof Object) || !file.name || file.name.includes("/"))) {
+    if (!url && (!(file instanceof Object) || !file.name || file.name.includes("/") || file.size == 0)) {
       return fail(422, { error: true, message: "You must provide a valid file or URL" });
     }
 
@@ -24,7 +24,7 @@ export const actions = {
     }
 
     // IF A FILE WAS UPLOADED
-    if ((file instanceof Object) && file.name && !file.name.includes("/")) {
+    if ((file instanceof Object) && file.name && !file.name.includes("/") && file.size > 0) {
       // CHECK IF FILENAME IS TAKEN
       let filename = file.name.split(".")[0];
       let fileType = file.type.split("/")[1];
