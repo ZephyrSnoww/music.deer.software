@@ -1,10 +1,36 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
+    import Checkbox from "$lib/comp/Checkbox.svelte";
   import type { CustomFormData } from "$lib/types";
 
   let { form }: { form?: CustomFormData } = $props();
   let loading = $state(false);
   let showWarning = $state(false);
+
+  let inputURL = $state("");
+  let urlIsPlaylist = $state(false);
+  let urlIsLarge = $state(false);
+
+  $effect(() => {
+    if (inputURL) {
+      inputURL = inputURL.split("?")[0];
+
+      if (inputURL.match(/(\/sets\/)|(\/playlist\/)/)) {
+        urlIsPlaylist = true;
+        urlIsLarge = true;
+      } else if (
+        inputURL.match(
+          /((soundcloud\.com\/[^/]+)|(\/album\/[^/]+)|(\/playlist\/[^/]+)|(\/artist\/[^/]+)|([^.]+\.bandcamp\.com))$/,
+        )
+      ) {
+        urlIsPlaylist = false;
+        urlIsLarge = true;
+      } else {
+        urlIsPlaylist = false;
+        urlIsLarge = false;
+      }
+    }
+  });
 </script>
 
 <div id="upload-page">
@@ -31,8 +57,18 @@
         type="text"
         placeholder="Enter URL"
         name="url"
+        bind:value={inputURL}
         style:width="35em"
       />
+
+      {#if urlIsPlaylist}
+        <Checkbox checked={false} name="createPlaylist">Create playlist</Checkbox>
+      {/if}
+
+      {#if urlIsLarge}
+        <Checkbox checked={false} name="skipSorting">Skip sorting page (may lead to incorrect metadata)</Checkbox>
+      {/if}
+
       <button>Submit</button>
     </form>
 
@@ -118,5 +154,11 @@
   #message-box > div,
   .box > div {
     text-align: center;
+  }
+
+  .checkbox-container {
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
   }
 </style>
