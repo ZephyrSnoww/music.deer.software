@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { MP3TagTags } from "mp3tag.js/types/tags";
   import DangerousButton from "./DangerousButton.svelte";
+  import { enhance } from "$app/forms";
 
   let {
     file,
@@ -18,7 +19,7 @@
   let allArtistsString = $derived(allArtists.join(", "));
 </script>
 
-<form method="POST" {action} class="file">
+<form method="POST" {action} class="file" use:enhance>
   <!-- COVER ART -->
   {#if file.data.v2?.APIC?.[0]}
     <img
@@ -81,10 +82,13 @@
           style:width={`${allArtists[i].length + 5}ch`}
         />
         {#if i > 0}
-          <button class="remove-button" onclick={(e) => {
-            e.preventDefault();
-            allArtists.splice(i, 1);
-          }}>-</button>
+          <button
+            class="remove-button"
+            onclick={(e) => {
+              e.preventDefault();
+              allArtists.splice(i, 1);
+            }}>-</button
+          >
         {/if}
       {/each}
 
