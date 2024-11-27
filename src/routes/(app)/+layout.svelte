@@ -43,7 +43,7 @@
 </script>
 
 <div id="popups-container">
-  {#each popups as popup}
+  {#each popups as popup (popup.id)}
     <div class="popup" style:border-color={popup.error ? "var(--red)" : ""} transition:fade>{popup.text}</div>
   {/each}
 </div>
