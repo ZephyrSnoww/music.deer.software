@@ -37,7 +37,7 @@
       popups.push({ id, text: text, error: true });
       setTimeout(() => {
         popups = popups.filter((p) => p.id != id);
-      }, 5000);
+      }, 7000);
     }
   });
 </script>
