@@ -100,6 +100,16 @@
       >
     </span>
 
+    <label>
+      <span>Year:</span>
+      <input
+        type="text"
+        name="year"
+        placeholder="Release Year"
+        value={file.data.v2?.TYER}
+      />
+    </label>
+
     <!-- <LabelledInput label="Artist(s):" name="artists" placeholder="Artist(s)" value={file.data.v2?.TPE1} /> -->
     <!-- <LabelledInput label="Genre:" name="genre" placeholder="Genre" value={file.data.v2?.TCON} /> -->
     <!-- <LabelledInput label="Track Number:" name="trackNum" placeholder="Track Number" value={file.data.v1?.track} /> -->
