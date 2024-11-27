@@ -62,7 +62,7 @@ model song {
   title         String
   releaseDate   DateTime
   discNumber    Int @default(1)
-  trackNumber   Int
+  trackNumber   Int @default(1)
   gain          Float @default(0)
 
   albumId Int
