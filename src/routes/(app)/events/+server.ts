@@ -4,6 +4,7 @@ import { produce } from "sveltekit-sse";
 
 export function POST({ cookies }) {
   return produce(
+    // @ts-expect-error This is just wrong?
     async function start({ emit }) {
       // GET TOKEN COOKIE
       const usernameCookie = cookies.get("username");
