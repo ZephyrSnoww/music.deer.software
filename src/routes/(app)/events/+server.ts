@@ -29,7 +29,7 @@ export function POST({ cookies }) {
 
       // ADD TO CLIENTS LIST
       clients.set(tokenCookie, emit);
-      console.log(`${tokenCookie} online`);
+      console.log(`${user.username} online`);
       emit("generic", "Connected!");
     },
     {
@@ -55,7 +55,7 @@ export function POST({ cookies }) {
 
         // REMOVE FROM CLIENTS LIST
         clients.delete(tokenCookie);
-        console.log(`${tokenCookie} offline`);
+        console.log(`${user.username} offline`);
       }
     }
   );
