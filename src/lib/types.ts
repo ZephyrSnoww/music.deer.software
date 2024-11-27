@@ -15,4 +15,14 @@ export interface ClientData {
     tags: true,
     uploadedSongs: true
   }}> | null;
+  songs?: Prisma.songGetPayload<{include: {
+    album: true,
+    artists: true,
+    favoritedBy: true,
+    playData: true,
+    playlists: true,
+    ratings: true,
+    tags: true,
+    uploader: true
+  }}>[]
 }
