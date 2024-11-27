@@ -11,7 +11,7 @@
 
 {#if data.unsortedFiles}
   <div id="page">
-    {#each data.unsortedFiles as file}
+    {#each data.unsortedFiles as file (file.filename)}
       <FileForm {file} />
     {/each}
   </div>
