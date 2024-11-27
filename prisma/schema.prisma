@@ -82,10 +82,10 @@ model song {
 }
 
 model artist {
-  id   Int    @id @default(autoincrement())
-  name String
+  name String @id
 
-  songs song[]
+  songs  song[]
+  albums album[]
 }
 
 model album {
@@ -95,7 +95,8 @@ model album {
   compilation   Boolean
   coverFilename String
 
-  tracks song[]
+  artists artist[]
+  tracks  song[]
 }
 
 // ========== METADATA ==========
