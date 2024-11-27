@@ -2,10 +2,10 @@
   import { enhance } from "$app/forms";
   import Checkbox from "$lib/comp/Checkbox.svelte";
   import type { CustomFormData } from "$lib/types";
+  import { source } from "sveltekit-sse";
 
   let { form }: { form?: CustomFormData } = $props();
   let loading = $state(false);
-  let showWarning = $state(false);
 
   let inputURL = $state("");
   let urlIsPlaylist = $state(false);
@@ -31,6 +31,8 @@
       }
     }
   });
+
+  const uploadEvent = source("/events").select("upload");
 </script>
 
 <div id="upload-page">
@@ -41,13 +43,9 @@
       enctype="multipart/form-data"
       use:enhance={() => {
         loading = true;
-        let timeWarning = setTimeout(() => {
-          showWarning = true;
-        }, 5000);
         return async ({ update, result }) => {
           await update();
           loading = false;
-          clearInterval(timeWarning);
         };
       }}
     >
@@ -75,35 +73,8 @@
 
       <button>Submit</button>
     </form>
-
-    {#if form?.message}
-      {#if form.error}
-        <div id="error-box">
-          <div id="error-title">Error</div>
-          <div>{form.message}</div>
-        </div>
-      {:else}
-        <div id="message-box">
-          <div>{@html form.message}</div>
-        </div>
-      {/if}
-    {/if}
   {:else}
-    <div class="box">
-      <div>Processing...</div>
-    </div>
-    {#if showWarning}
-      <div class="box">
-        <div>
-          The only reason this might take longer than a few seconds is if you
-          entered a playlist or album URL. If that isn't the case and you're
-          stuck waiting for a while, you should probably reload the page and try
-          again.
-          <br /><br />
-          If you <i>did</i> enter a playlist or album URL, please be patient.
-        </div>
-      </div>
-    {/if}
+    <div style:text-align="center">{@html $uploadEvent || "Processing..."}</div>
   {/if}
 </div>
 
@@ -125,34 +96,6 @@
 
   #title {
     font-size: 1.5em;
-    text-align: center;
-  }
-
-  #error-box,
-  #message-box,
-  .box {
-    background: black;
-    border-radius: 0.5em;
-    padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
-    max-width: 25em;
-    margin-top: 1em;
-    border: 1px solid var(--lime);
-  }
-
-  #error-title {
-    text-align: center;
-  }
-
-  #error-box {
-    border: 1px solid var(--red);
-  }
-
-  #error-box > div,
-  #message-box > div,
-  .box > div {
     text-align: center;
   }
 </style>
