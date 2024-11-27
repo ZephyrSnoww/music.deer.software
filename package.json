@@ -25,6 +25,7 @@
 		"@sveltejs/adapter-node": "^5.2.9",
 		"argon2": "^0.41.1",
 		"gsap": "^3.12.5",
-		"mp3tag.js": "^3.11.2"
+		"mp3tag.js": "^3.11.2",
+		"sveltekit-sse": "^0.13.9"
 	}
 }
