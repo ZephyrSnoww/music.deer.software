@@ -12,7 +12,8 @@
 </script>
 
 <button class="nostyle" onclick={(e) => {
-  if (takingAction && clicksLeft <= 0 && onclick) {
+  if (takingAction && clicksLeft <= 1 && onclick) {
+    takingAction = false;
     onclick(e);
     return;
   }
