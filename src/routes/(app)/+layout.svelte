@@ -17,9 +17,9 @@
     goto("/login");
   }
 
-  let popups: { id: number; text: string }[] = $state([]);
+  let popups: { id: number; text: string, error?: boolean }[] = $state([]);
 
-  const genericEvent = source("/events", {}).select("generic");
+  const genericEvent = source("/events").select("generic");
   genericEvent.subscribe((text: string) => {
     if (text) {
       let id = Math.floor(Math.random() * 10000000000);
@@ -29,11 +29,22 @@
       }, 5000);
     }
   });
+
+  const errorEvent = source("/events").select("error");
+  errorEvent.subscribe((text: string) => {
+    if (text) {
+      let id = Math.floor(Math.random() * 10000000000);
+      popups.push({ id, text: text, error: true });
+      setTimeout(() => {
+        popups = popups.filter((p) => p.id != id);
+      }, 5000);
+    }
+  });
 </script>
 
 <div id="popups-container">
   {#each popups as popup}
-    <div class="popup" transition:fade>{popup.text}</div>
+    <div class="popup" style:border-color={popup.error ? "var(--red)" : ""} transition:fade>{popup.text}</div>
   {/each}
 </div>
 
