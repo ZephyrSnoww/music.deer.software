@@ -1,5 +1,6 @@
 import { db } from '$lib/db.js';
 import type { ClientData } from '$lib/types.js';
+import { redirect } from '@sveltejs/kit';
 
 export async function load({ cookies, depends }) {
   depends("data:account");
@@ -33,6 +34,10 @@ export async function load({ cookies, depends }) {
   if (removeCookies) {
     cookies.delete("username", { path: "/" });
     cookies.delete("token", { path: "/" });
+  }
+
+  if (!data.account) {
+    return redirect(300, "/login");
   }
 
   return data;
