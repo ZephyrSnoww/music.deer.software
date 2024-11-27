@@ -57,13 +57,13 @@ model tag {
 
 // ========== SONG DATA ==========
 model song {
-  id            Int      @id @default(autoincrement())
-  filename      String
-  title         String
-  releaseDate   DateTime
-  discNumber    Int @default(1)
-  trackNumber   Int @default(1)
-  gain          Float @default(0)
+  id          Int      @id @default(autoincrement())
+  filename    String
+  title       String
+  releaseDate DateTime
+  discNumber  Int      @default(1)
+  trackNumber Int      @default(1)
+  gain        Float    @default(0)
 
   albumId Int
   album   album @relation(fields: [albumId], references: [id])
@@ -88,10 +88,10 @@ model artist {
 }
 
 model album {
-  id            Int      @id @default(autoincrement())
-  name          String
-  releaseDate   DateTime
-  compilation   Boolean @default(false)
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  releaseDate DateTime
+  compilation Boolean  @default(false)
 
   artists artist[]
   tracks  song[]
