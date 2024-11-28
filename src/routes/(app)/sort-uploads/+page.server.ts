@@ -112,7 +112,7 @@ export const actions = {
     }
     let song = await db.song.create({
       data: {
-        filename,
+        filename: `${filename}.mp3`,
         releaseDate: new Date(year),
         title,
         uploader: { connect: { id: user.id } },
