@@ -65,8 +65,8 @@ model song {
   trackNumber Int      @default(1)
   gain        Float    @default(0)
 
-  albumId Int
-  album   album @relation(fields: [albumId], references: [id])
+  albumName String
+  album     album  @relation(fields: [albumName], references: [name])
 
   artists artist[]
 
@@ -88,8 +88,7 @@ model artist {
 }
 
 model album {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
+  name        String   @id
   releaseDate DateTime
   compilation Boolean  @default(false)
 
@@ -110,7 +109,7 @@ model rating {
 
 model playData {
   id         Int      @id @default(autoincrement())
-  playCount  Int
+  playCount  Int      @default(0)
   lastPlayed DateTime
 
   user   user @relation(fields: [userId], references: [id])
