@@ -4,21 +4,21 @@
 
 <div id="song-info">
   <img
-    src={appState.nowPlaying?.coverFilename || "/placeholder-cover.png"}
+    src={appState.nowPlaying?.cover || "/placeholder-cover.png"}
     alt=""
     id="song-cover"
   />
   <div id="song-text">
     {#if appState.nowPlaying}
-      <a id="song-title" href={`/songs/${appState.nowPlaying?.id}`}>
+      <a id="song-title" href={`/songs/${appState.nowPlaying.id}`}>
         {appState.nowPlaying?.title}
       </a>
-      <a id="song-album" href={`/albums/${appState.nowPlaying?.albumId}`}>
+      <a id="song-album" href={`/albums/${appState.nowPlaying.album.id}`}>
         {appState.nowPlaying.album.name}
       </a>
       <div id="song-artists">
         {#each appState.nowPlaying.artists as artist}
-          <a href={`/artists/${artist.id}`} class="song-artist">
+          <a href={`/artists/${artist.name}`} class="song-artist">
             {artist.name}
           </a>
         {/each}
