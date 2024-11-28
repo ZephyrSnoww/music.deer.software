@@ -13,7 +13,7 @@
       <a id="song-title" href={`/songs/${appState.nowPlaying.id}`}>
         {appState.nowPlaying?.title}
       </a>
-      <a id="song-album" href={`/albums/${appState.nowPlaying.album.id}`}>
+      <a id="song-album" href={`/albums/${appState.nowPlaying.album.name}`}>
         {appState.nowPlaying.album.name}
       </a>
       <div id="song-artists">
@@ -54,6 +54,7 @@
     flex-direction: column;
     line-height: 1em;
     justify-content: space-between;
+    gap: 0.25em;
   }
 
   #song-album,
@@ -61,5 +62,16 @@
     font-size: 0.8em;
     line-height: 1em;
     opacity: 0.6;
+  }
+
+  #song-artists {
+    display: flex;
+    gap: 1em;
+  }
+
+  #song-artists > a:not(:last-of-type)::after {
+    content: ",";
+    color: white;
+    position: absolute;
   }
 </style>
