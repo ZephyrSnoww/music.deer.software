@@ -11,7 +11,7 @@ export const appState: {
     ratings: true,
     tags: true,
     uploader: true
-  }}>;
+  }}> & { cover?: string; };
 } = $state({
   subnav: "",
   nowPlaying: undefined
