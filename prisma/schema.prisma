@@ -58,7 +58,7 @@ model tag {
 // ========== SONG DATA ==========
 model song {
   id          Int      @id @default(autoincrement())
-  filename    String
+  filename    String   @unique
   title       String
   releaseDate DateTime
   discNumber  Int      @default(1)
