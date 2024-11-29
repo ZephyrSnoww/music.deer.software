@@ -1,6 +1,6 @@
-import { db } from '$lib/db.js';
-import type { ClientData } from '$lib/types.js';
-import { redirect } from '@sveltejs/kit';
+import { db } from "$lib/db.js";
+import type { ClientData } from "$lib/types.js";
+import { redirect } from "@sveltejs/kit";
 
 export async function load({ cookies, depends }) {
   depends("data:account");

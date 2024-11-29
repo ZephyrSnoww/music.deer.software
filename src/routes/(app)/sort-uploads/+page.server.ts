@@ -107,7 +107,14 @@ export const actions = {
     for (let artistName of artistArray) {
       artistCreationData.push({
         where: { name: artistName },
-        create: { name: artistName }
+        create: {
+          name: artistName, albums: {
+            connectOrCreate: {
+              where: { name: album },
+              create: { name: album, releaseDate: new Date(year) }
+            }
+          }
+        }
       });
     }
     let song = await db.song.create({

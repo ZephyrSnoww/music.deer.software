@@ -1,8 +1,8 @@
-import { env } from '$env/dynamic/private';
-import { clients } from '$lib/clients.js';
-import { fail, redirect } from '@sveltejs/kit';
-import { exec } from 'child_process';
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
+import { env } from "$env/dynamic/private";
+import { clients } from "$lib/clients.js";
+import { fail, redirect } from "@sveltejs/kit";
+import { exec } from "child_process";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "fs";
 
 export const actions = {
   default: async ({ cookies, request }) => {

@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/private';
-import { db } from '$lib/db.js';
-import { error } from '@sveltejs/kit';
-import { readFileSync } from 'fs';
+import { env } from "$env/dynamic/private";
+import { db } from "$lib/db.js";
+import { error } from "@sveltejs/kit";
+import { readFileSync } from "fs";
 
 export async function GET({ params, setHeaders }) {
   const filename = params.filename;
