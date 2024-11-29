@@ -80,3 +80,25 @@ export function formatTime(time: number) {
   }
   return `${days ? `${days}:` : ""}${hours || days ? `${hours}:` : ""}${minutes}:${seconds}`;
 }
+
+export function getSubsonicParams(url: URL): {
+  username: string | null;
+  password: string | null;
+  token: string | null;
+  salt: string | null;
+  version: string | null;
+  client: string | null;
+  format: string | null;
+} {
+  const params = url.searchParams;
+
+  return {
+    username: params.get("u"),
+    password: params.get("p"),
+    token: params.get("t"),
+    salt: params.get("s"),
+    version: params.get("v"),
+    client: params.get("c"),
+    format: params.get("f")
+  };
+}
