@@ -26,6 +26,7 @@
 		"argon2": "^0.41.1",
 		"gsap": "^3.12.5",
 		"mp3tag.js": "^3.11.2",
-		"sveltekit-sse": "^0.13.9"
+		"sveltekit-sse": "^0.13.9",
+		"xmlbuilder2": "^3.1.1"
 	}
 }
