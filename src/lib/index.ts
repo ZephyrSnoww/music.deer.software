@@ -60,3 +60,23 @@ export const availableTags: {
       v2name: "TDAT"
     }
   ];
+
+export function formatTime(time: number) {
+  if (!time) {
+    return false;
+  }
+  let seconds: number | string = Math.floor(time) % 60;
+  let minutes: number | string = Math.floor(time / 100) % 60;
+  let hours: number | string = Math.floor(time / 10000) % 24;
+  let days: number | string = Math.floor(time / 1000000) % 24;
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  if (hours && minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (days && hours < 10) {
+    hours = `0${hours}`;
+  }
+  return `${days ? `${days}:` : ""}${hours || days ? `${hours}:` : ""}${minutes}:${seconds}`;
+}
