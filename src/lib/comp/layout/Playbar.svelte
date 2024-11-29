@@ -5,12 +5,6 @@
   import PlaybarSongInfo from "./PlaybarSongInfo.svelte";
 
   let audioPlayer: HTMLAudioElement | undefined = $state();
-
-  $effect(() => {
-    if (appState.nowPlaying?.id && audioPlayer) {
-      audioPlayer.play();
-    }
-  });
 </script>
 
 {#if appState.nowPlaying}
@@ -18,13 +12,16 @@
     bind:this={audioPlayer}
     src={`/file/${appState.nowPlaying?.filename}`}
     style:display="none"
+    oncanplay={(e) => {
+      audioPlayer!.play();
+    }}
   ></audio>
 {/if}
 
 <div id="playbar">
   <PlaybarSongInfo />
 
-  <PlaybarControls {audioPlayer} />
+  <PlaybarControls bind:audioPlayer />
 
   <PlaybarActions />
 </div>

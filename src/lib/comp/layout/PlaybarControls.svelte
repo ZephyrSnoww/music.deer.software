@@ -1,23 +1,85 @@
 <script lang="ts">
+  import { formatTime } from "$lib";
+  import { onMount } from "svelte";
+
+  let {
+    audioPlayer = $bindable(),
+  }: {
+    audioPlayer?: HTMLAudioElement;
+  } = $props();
+
+  let currentTime = $state(0);
+  let duration = $state(0);
+  let paused = $state(true);
+
+  // UPDATING PLAYBAR DISPLAY STATS
+  onMount(() => {
+    setInterval(() => {
+      currentTime = audioPlayer?.currentTime || 0;
+      duration = audioPlayer?.duration || 0;
+      paused = audioPlayer?.paused || audioPlayer == undefined;
+    }, 50);
+  });
+
+  // SKIPPING
+  function handleSkip() {}
+
+  // PAUSING
+  function handlePause() {
+    if (audioPlayer) {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+      }
+      else {
+        audioPlayer.pause();
+      }
+    }
+  }
+
+  // SEEKING
+  function handleSeek() {}
 </script>
 
 <div id="playback-controls">
   <div id="controls">
+    <!-- SHUFFLE -->
     <button id="shuffle-button" class="nostyle icon">shuffle</button>
+
+    <!-- PREVIOUS -->
     <button id="previous-button" class="nostyle icon">skip_previous</button>
-    <button id="skip-back-button" class="nostyle icon">fast_rewind</button>
-    <button id="play-button" class="nostyle icon">play_circle_filled</button>
-    <button id="skip-button" class="nostyle icon">fast_forward</button>
+
+    <!-- REWIND -->
+    <button id="skip-back-button" class="nostyle icon" onclick={handleSkip}>
+      fast_rewind
+    </button>
+
+    <!-- PAUSE/PLAY -->
+    <button id="play-button" class="nostyle icon" onclick={handlePause}>
+      {paused ? "play_circle_filled" : "pause_circle_filled"}
+    </button>
+
+    <!-- FAST FORWARD -->
+    <button id="skip-button" class="nostyle icon" onclick={handleSkip}>
+      fast_forward
+    </button>
+
+    <!-- SKIP -->
     <button id="next-button" class="nostyle icon">skip_next</button>
+
+    <!-- REPEAT -->
     <button id="repeat-button" class="nostyle icon">repeat</button>
   </div>
 
   <div id="progress-bar-container">
-    <div class="time-text">0:00</div>
-    <div id="progress-bar-bg">
-      <div id="progress-bar"></div>
-    </div>
-    <div class="time-text">0:00</div>
+    <div class="time-text">{formatTime(currentTime) || "0:00"}</div>
+    <!-- svelte-ignore a11y_consider_explicit_label -->
+    <button class="nostyle" id="progress-bar-bg" onclick={handleSeek}>
+      <div
+        id="progress-bar"
+        style:width={`${(currentTime / duration) * 100}%`}
+      ></div>
+    </button>
+    <div class="time-text">{formatTime(duration) || "0:00"}</div>
   </div>
 </div>
 
@@ -57,7 +119,7 @@
   }
 
   #progress-bar {
-    width: 33%;
+    width: 0%;
     height: 100%;
     background: var(--lime);
     border-radius: 0.2em;
