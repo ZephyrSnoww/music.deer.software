@@ -77,6 +77,7 @@
     flex-direction: column;
     padding-bottom: 6em;
     gap: 1em;
+    pointer-events: none;
   }
 
   .popup {
