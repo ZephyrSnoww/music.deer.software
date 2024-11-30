@@ -1,4 +1,4 @@
-import { verifySubsonicParams } from "$lib";
+import { verifySubsonicParams } from "$lib/subsonic";
 import { create } from "xmlbuilder2";
 
 export async function GET({ setHeaders, url }) {

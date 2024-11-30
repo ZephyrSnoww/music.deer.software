@@ -1,4 +1,4 @@
-import { verifySubsonicParams } from "$lib";
+import { verifySubsonicParams } from "$lib/subsonic";
 import { db } from "$lib/db.js";
 import { create } from "xmlbuilder2";
 
