@@ -58,6 +58,16 @@
   }
 
   #song-album,
+  #song-artists,
+  #song-title {
+    text-wrap: nowrap;
+    white-space: nowrap;
+    max-width: 25vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #song-album,
   #song-artists {
     font-size: 0.8em;
     line-height: 1em;
