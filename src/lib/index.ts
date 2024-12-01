@@ -66,9 +66,9 @@ export function formatTime(time: number) {
     return false;
   }
   let seconds: number | string = Math.floor(time) % 60;
-  let minutes: number | string = Math.floor(time / 100) % 60;
-  let hours: number | string = Math.floor(time / 10000) % 24;
-  let days: number | string = Math.floor(time / 1000000) % 24;
+  let minutes: number | string = Math.floor(time / 60) % 60;
+  let hours: number | string = Math.floor(time / (60 * 60)) % 24;
+  let days: number | string = Math.floor(time / (60 * 60 * 24)) % 24;
   if (seconds < 10) {
     seconds = `0${seconds}`;
   }
