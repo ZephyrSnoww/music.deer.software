@@ -24,6 +24,6 @@ export const actions = {
 
     cookies.set("username", user.username, { path: "/" });
     cookies.set("token", user.credentials!.token, { path: "/" });
-    return redirect(300, "/");
+    return redirect(302, "/");
   }
 }

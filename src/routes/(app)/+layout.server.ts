@@ -37,7 +37,7 @@ export async function load({ cookies, depends }) {
   }
 
   if (!data.account) {
-    return redirect(300, "/login");
+    return redirect(302, "/login");
   }
 
   data.songs = await db.song.findMany({
