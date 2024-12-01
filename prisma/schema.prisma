@@ -64,6 +64,7 @@ model song {
   discNumber  Int      @default(1)
   trackNumber Int      @default(1)
   gain        Float    @default(0)
+  url         String
 
   albumName String
   album     album  @relation(fields: [albumName], references: [name])
