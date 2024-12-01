@@ -22,7 +22,7 @@
   });
 
   // SKIPPING
-  function handleSkip(dir: -1 | 1) {
+  function handleScrubClick(dir: -1 | 1) {
     if (audioPlayer) {
       audioPlayer.currentTime += 5 * dir;
     }
@@ -53,7 +53,7 @@
     <button id="previous-button" class="nostyle icon">skip_previous</button>
 
     <!-- REWIND -->
-    <button id="skip-back-button" class="nostyle icon" onclick={() => handleSkip(-1)}>
+    <button id="skip-back-button" class="nostyle icon" onclick={() => handleScrubClick(-1)}>
       fast_rewind
     </button>
 
@@ -63,7 +63,7 @@
     </button>
 
     <!-- FAST FORWARD -->
-    <button id="skip-button" class="nostyle icon" onclick={() => handleSkip(1)}>
+    <button id="skip-button" class="nostyle icon" onclick={() => handleScrubClick(1)}>
       fast_forward
     </button>
 
