@@ -4,7 +4,7 @@
 
 <div id="song-info">
   <img
-    src={`/cover/${appState.nowPlaying?.id}` || "/placeholder-cover.png"}
+    src={`/cover/${appState.nowPlaying?.id}`}
     alt=""
     id="song-cover"
   />
