@@ -2,6 +2,33 @@ import { create } from "xmlbuilder2";
 import { db } from "./db";
 import { verify } from "argon2";
 import { createHash } from "crypto";
+import type { Prisma } from "@prisma/client";
+
+export function getOrCheckParam(url: URL, param: string) {
+  const data = url.searchParams.get(param);
+
+  if (!data) {
+    return {
+      hasParam: false,
+      value: create({
+        "subsonic-response": {
+          "@xmlns": "http://subsonic.org/restapi",
+          "@status": "failed",
+          "@version": "1.16.1",
+          "error": {
+            "@code": "10",
+            "@message": `missing parameter: '${param}'`
+          }
+        }
+      }).end()
+    };
+  }
+
+  return {
+    hasParam: true,
+    value: data
+  };
+}
 
 export function getSubsonicParams(url: URL): {
   username: string | null;
@@ -35,6 +62,7 @@ export async function verifySubsonicParams(url: URL): Promise<{
   format: string | null;
   authenticated: boolean;
   response?: string;
+  user: Prisma.userGetPayload<{}> | null;
 }> {
   // GET SUBSONIC PARAMETERS
   const {
@@ -47,6 +75,7 @@ export async function verifySubsonicParams(url: URL): Promise<{
     format
   } = getSubsonicParams(url);
 
+  let user = null;
   let authenticated = false;
   let response
 
@@ -68,7 +97,7 @@ export async function verifySubsonicParams(url: URL): Promise<{
   }
   else {
     // AUTHENTICATE USER
-    const user = await db.user.findUnique({ where: { username }, include: { credentials: true } });
+    user = await db.user.findUnique({ where: { username }, include: { credentials: true } });
 
     // CHECK USER EXISTS
     if (user) {
@@ -110,6 +139,7 @@ export async function verifySubsonicParams(url: URL): Promise<{
     client,
     format,
     authenticated,
-    response
+    response,
+    user
   };
 }
