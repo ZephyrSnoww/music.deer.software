@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/private';
 import { db } from '$lib/db.js';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import MP3Tag from 'mp3tag.js';
 
@@ -8,16 +8,16 @@ export async function GET({ params, setHeaders }) {
   const songId = Number(params.songId);
 
   if (isNaN(songId)) {
-    throw error(404);
+    return redirect(302, "/placeholder-cover.png");
   }
 
   const songData = await db.song.findUnique({ where: { id: songId } });
 
   if (!songData) {
-    throw error(404);
+    return redirect(302, "/placeholder-cover.png");
   }
 
-  // try {
+  try {
     const songTags = new MP3Tag(readFileSync(`${env.LIBRARY_FOLDER}/library/${songData.filename}`)).read();
     const songCover = Buffer.from(songTags.v2?.APIC?.[0].data || []);
 
@@ -27,8 +27,8 @@ export async function GET({ params, setHeaders }) {
     });
 
     return new Response(songCover);
-  // }
-  // catch (e) {
-  //   throw error(404);
-  // }
+  }
+  catch (e) {
+    return redirect(302, "/placeholder-cover.png");
+  }
 }
