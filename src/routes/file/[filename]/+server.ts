@@ -14,12 +14,16 @@ export async function GET({ params, setHeaders }) {
   try {
     const song = readFileSync(`${env.LIBRARY_FOLDER}/library/${songData.filename}`);
 
-    setHeaders({
-      "Content-Type": "audio/mp3",
-      "Content-Length": `${song.length}`
+    return new Response(song, {
+      status: 200,
+      headers: {
+        "Content-Type": "audio/mp3",
+        "Content-Length": `${song.length}`,
+        "Content-Range": `0-${song.length}/${song.length}`,
+        "Connection": "keep-alive",
+        "Accept-Ranges": "bytes"
+      }
     });
-
-    return new Response(song);
   }
   catch (e) {
     throw error(404);
