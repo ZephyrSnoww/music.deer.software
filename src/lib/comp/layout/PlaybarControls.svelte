@@ -41,7 +41,17 @@
   }
 
   // SEEKING
-  function handleSeek() {}
+  function handleSeek(e: MouseEvent) {
+    if (audioPlayer) {
+      let target = e.target! as HTMLElement;
+      if (target.id == "progress-bar") {
+        target = target.parentElement!;
+      }
+
+      let pos = Math.floor(((e.clientX - target.offsetLeft) / (target.clientWidth)) * 100) / 100;
+      audioPlayer.currentTime = audioPlayer.duration * pos;
+    }
+  }
 </script>
 
 <div id="playback-controls">
