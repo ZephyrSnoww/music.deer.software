@@ -44,7 +44,7 @@ export const actions = {
     const usernameCookie = cookies.get("username");
     const tokenCookie = cookies.get("token");
     if (!tokenCookie) {
-      return redirect(300, "/login");
+      return redirect(302, "/login");
     }
     const emit = clients.get(tokenCookie);
     if (!emit) {
@@ -53,7 +53,7 @@ export const actions = {
 
     const user = await db.user.findUnique({ where: { username: usernameCookie } });
     if (!user) {
-      return redirect(300, "/login");
+      return redirect(302, "/login");
     }
 
     const formData = await request.formData();
