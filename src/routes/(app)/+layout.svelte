@@ -10,6 +10,7 @@
   import Search from "$lib/comp/layout/Search.svelte";
   import Subnav from "$lib/comp/layout/Subnav.svelte";
   import { fade } from "svelte/transition";
+  import RightClickMenu from "$lib/comp/layout/RightClickMenu.svelte";
 
   let { children, data }: { children: () => any; data: ClientData } = $props();
 
@@ -17,7 +18,7 @@
     goto("/login");
   }
 
-  let popups: { id: number; text: string, error?: boolean }[] = $state([]);
+  let popups: { id: number; text: string; error?: boolean }[] = $state([]);
 
   const genericEvent = source("/events").select("generic");
   genericEvent.subscribe((text: string) => {
@@ -42,9 +43,17 @@
   });
 </script>
 
+<RightClickMenu />
+
 <div id="popups-container">
   {#each popups as popup (popup.id)}
-    <div class="popup" style:border-color={popup.error ? "var(--red)" : ""} transition:fade>{popup.text}</div>
+    <div
+      class="popup"
+      style:border-color={popup.error ? "var(--red)" : ""}
+      transition:fade
+    >
+      {popup.text}
+    </div>
   {/each}
 </div>
 
