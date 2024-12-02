@@ -1,5 +1,33 @@
 <script lang="ts">
-  let rating = 3;
+  import { onMount } from "svelte";
+  import { appState } from "$lib/state.svelte";
+
+  let {
+    audioPlayer = $bindable(),
+  }: {
+    audioPlayer?: HTMLAudioElement;
+  } = $props();
+
+  let volume = $state(0);
+
+  onMount(() => {
+    setInterval(() => {
+      volume = audioPlayer?.volume || 0;
+    }, 50);
+  });
+
+  function handleVolumeChange(e: MouseEvent) {
+    if (audioPlayer) {
+      let target = e.target! as HTMLElement;
+      if (target.id == "volume-slider-value") {
+        target = target.parentElement!;
+      }
+
+      let pos = ((e.clientX - target.offsetLeft) / target.clientWidth);
+      console.log(pos);
+      audioPlayer.volume = pos;
+    }
+  }
 </script>
 
 <div id="actions">
@@ -7,7 +35,7 @@
     {#each { length: 5 } as _, i}
       <div
         class="star icon"
-        style:color={rating > i ? "var(--lime)" : "var(--jet)"}
+        style:color={(appState.nowPlaying?.ratings?.[0]?.rating || 0) > i ? "var(--lime)" : "var(--jet)"}
       >
         star
       </div>
@@ -19,9 +47,10 @@
     <button id="queue-button" class="nostyle icon">queue</button>
     <div id="volume">
       <button id="volume-button" class="nostyle icon">volume_up</button>
-      <div id="volume-slider">
-        <div id="volume-slider-value"></div>
-      </div>
+      <!-- svelte-ignore a11y_consider_explicit_label -->
+      <button class="nostyle" id="volume-slider" onclick={handleVolumeChange}>
+        <div id="volume-slider-value" style:width={`${volume * 100}%`}></div>
+      </button>
     </div>
   </div>
 </div>

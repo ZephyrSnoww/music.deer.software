@@ -23,7 +23,7 @@
 
   <PlaybarControls bind:audioPlayer />
 
-  <PlaybarActions />
+  <PlaybarActions bind:audioPlayer />
 </div>
 
 <style>
