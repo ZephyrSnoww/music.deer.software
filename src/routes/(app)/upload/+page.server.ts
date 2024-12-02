@@ -45,11 +45,13 @@ export const actions = {
     }
 
     // ERROR IF PLAYLIST NAME IS TAKEN
+    if (createPlaylist) {
     const existingPlaylist = await db.playlist.findUnique({ where: { name: playlistName! } });
     if (existingPlaylist?.ownerId != user.id) {
       emit("error", "");
       emit("error", "That playlist name is taken");
       return fail(422, { error: true, message: "That playlist name is taken" });
+      }
     }
 
     // CHECK SAVE PATH EXISTS
