@@ -34,8 +34,7 @@ model credentials {
 
 // ========== SORTING DATA ==========
 model playlist {
-  id   Int    @id @default(autoincrement())
-  name String
+  name String @id
 
   ownerId Int
   owner   user @relation(name: "playlistOwner", fields: [ownerId], references: [id])
