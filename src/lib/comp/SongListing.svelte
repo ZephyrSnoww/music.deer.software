@@ -63,7 +63,7 @@
 
     <!-- ALBUM -->
     <div class="album">
-      <a href={`/album/${song.album.name}`}>{song.album.name}</a>
+      <a href={`/albums/${song.album.name}`}>{song.album.name}</a>
     </div>
 
     <!-- ARTISTS -->

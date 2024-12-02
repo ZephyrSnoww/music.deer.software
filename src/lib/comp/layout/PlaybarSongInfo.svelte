@@ -10,9 +10,10 @@
   />
   <div id="song-text">
     {#if appState.nowPlaying}
-      <a id="song-title" href={`/songs/${appState.nowPlaying.id}`}>
+      <!-- <a id="song-title" href={`/songs/${appState.nowPlaying.id}`}>
         {appState.nowPlaying?.title}
-      </a>
+      </a> -->
+      <div id="song-title">{appState.nowPlaying?.title}</div>
       <a id="song-album" href={`/albums/${appState.nowPlaying.album.name}`}>
         {appState.nowPlaying.album.name}
       </a>
