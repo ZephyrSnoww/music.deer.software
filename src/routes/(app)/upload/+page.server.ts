@@ -44,6 +44,14 @@ export const actions = {
       return fail(422, { error: true, message: "You must enter a playlist name" });
     }
 
+    // ERROR IF PLAYLIST NAME IS TAKEN
+    const existingPlaylist = await db.playlist.findUnique({ where: { name: playlistName! } });
+    if (existingPlaylist?.ownerId != user.id) {
+      emit("error", "");
+      emit("error", "That playlist name is taken");
+      return fail(422, { error: true, message: "That playlist name is taken" });
+    }
+
     // CHECK SAVE PATH EXISTS
     if (!existsSync(env.LIBRARY_FOLDER)) {
       mkdirSync(env.LIBRARY_FOLDER);
@@ -133,9 +141,6 @@ export const actions = {
         });
       });
 
-      // CHECK IF USER WANTED TO CREATE PLAYLISTS
-      if (createPlaylist) { }
-
       // CREATE FOLDERS IF THEY DONT EXIST
       if (!existsSync(env.LIBRARY_FOLDER)) {
         mkdirSync(env.LIBRARY_FOLDER);
@@ -158,6 +163,40 @@ export const actions = {
         // ALBUM ARTISTS
         // DISC NUM
         // COMMENTS?
+
+        // MAKE SURE SONG ISN'T ALREADY IN DATABASE
+        const songInDB = await db.song.findUnique({
+          where: {
+            filename: `${artist} - ${title}.mp3`,
+            releaseDate: new Date(year || 0)
+          }
+        });
+        if (songInDB) {
+          if (files.length == 1) {
+            emit("error", "");
+            emit("error", "Song already exists on server");
+            return fail(422, { error: true, message: "Song already exists on server" });
+          }
+
+          if (createPlaylist) {
+            await db.song.update({
+              where: { id: songInDB.id },
+              data: {
+                playlists: {
+                  connectOrCreate: {
+                    where: { name: playlistName! },
+                    create: {
+                      name: playlistName!,
+                      ownerId: user.id
+                    }
+                  }
+                }
+              }
+            });
+          }
+
+          continue;
+        }
 
         // MAKE SURE FILENAME ISNT TAKEN
         emit("upload", "Making sure filename isn't taken");
@@ -211,9 +250,12 @@ export const actions = {
               }
             },
             playlists: createPlaylist ? {
-              create: {
-                name: playlistName!,
-                ownerId: user.id
+              connectOrCreate: {
+                where: { name: playlistName! },
+                create: {
+                  name: playlistName!,
+                  ownerId: user.id
+                }
               }
             } : undefined
           }
