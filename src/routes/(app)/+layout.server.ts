@@ -53,5 +53,12 @@ export async function load({ cookies, depends }) {
     },
   });
 
+  data.albums = await db.album.findMany({
+    include: {
+      _count: { select: { tracks: true } },
+      artists: true
+    }
+  });
+
   return data;
 }
