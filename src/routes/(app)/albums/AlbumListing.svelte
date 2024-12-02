@@ -8,8 +8,6 @@
       include: { _count: { select: { tracks: true } }; artists: true };
     }>;
   } = $props();
-
-  console.log(album);
 </script>
 
 {#if album}
