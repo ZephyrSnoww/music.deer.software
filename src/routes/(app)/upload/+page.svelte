@@ -9,7 +9,6 @@
 
   let inputURL = $state("");
   let urlIsPlaylist = $state(false);
-  let urlIsLarge = $state(false);
 
   $effect(() => {
     if (inputURL) {
@@ -17,17 +16,8 @@
 
       if (inputURL.match(/(\/sets\/)|(\/playlist\/)/)) {
         urlIsPlaylist = true;
-        urlIsLarge = true;
-      } else if (
-        inputURL.match(
-          /((soundcloud\.com\/[^/]+)|(\/album\/[^/]+)|(\/playlist\/[^/]+)|(\/artist\/[^/]+)|([^.]+\.bandcamp\.com))$/,
-        )
-      ) {
-        urlIsPlaylist = false;
-        urlIsLarge = true;
       } else {
         urlIsPlaylist = false;
-        urlIsLarge = false;
       }
     }
   });
@@ -60,15 +50,9 @@
       />
 
       {#if urlIsPlaylist}
-        <Checkbox checked={false} name="createPlaylist"
-          >Create playlist</Checkbox
-        >
-      {/if}
-
-      {#if urlIsLarge}
-        <Checkbox checked={false} name="skipSorting"
-          >Skip sorting page (may lead to incorrect metadata)</Checkbox
-        >
+        <Checkbox checked={false} name="createPlaylist">
+          Create playlist
+        </Checkbox>
       {/if}
 
       <button>Submit</button>
