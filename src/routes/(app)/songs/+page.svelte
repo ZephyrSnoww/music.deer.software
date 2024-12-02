@@ -6,6 +6,7 @@
   const { data }: { data: ClientData } = $props();
 
   let selectedSongs: number[] = $state([]);
+  let lastClicked: number | undefined = $state();
 </script>
 
 <div class="page-title">All Songs</div>
@@ -14,7 +15,7 @@
 
 {#if data.songs}
   <div id="song-listing">
-    {#each data.songs as song}
+    {#each data.songs as song, index}
       <SongListing
         {song}
         currentlyPlaying={appState.nowPlaying?.id == song.id}
@@ -23,12 +24,27 @@
           if (e.ctrlKey || e.metaKey) {
             if (selectedSongs.includes(song.id)) {
               selectedSongs = selectedSongs.filter((id) => id != song.id);
+              lastClicked = undefined;
             } else {
               selectedSongs.push(song.id);
+              lastClicked = index;
             }
-          }
-          else {
+          } else if (e.shiftKey && lastClicked) {
+            let songsToAdd;
+            if (index < lastClicked) {
+              songsToAdd = data.songs?.slice(index, lastClicked);
+            } else {
+              songsToAdd = data.songs?.slice(lastClicked + 1, index + 1);
+            }
+
+            songsToAdd?.forEach((s) => {
+              if (!selectedSongs.includes(s.id)) {
+                selectedSongs.push(s.id);
+              }
+            });
+          } else {
             selectedSongs = [song.id];
+            lastClicked = index;
           }
         }}
       />
