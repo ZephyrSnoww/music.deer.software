@@ -9,6 +9,7 @@
 
   let inputURL = $state("");
   let urlIsPlaylist = $state(false);
+  let createPlaylist = $state(false);
 
   $effect(() => {
     if (inputURL) {
@@ -50,9 +51,16 @@
       />
 
       {#if urlIsPlaylist}
-        <Checkbox checked={false} name="createPlaylist">
+        <Checkbox bind:checked={createPlaylist} name="createPlaylist">
           Create playlist
         </Checkbox>
+        {#if createPlaylist}
+          <input
+            type="text"
+            name="playlistName" 
+            placeholder="Playlist Name"
+          />
+        {/if}
       {/if}
 
       <button>Submit</button>

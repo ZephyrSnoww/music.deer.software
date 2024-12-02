@@ -28,13 +28,20 @@ export const actions = {
     let file = formData.get("file");
     let url = formData.get("url") as string | null;
     let createPlaylist = formData.get("createPlaylist") as string | null;
-    let skipSorting = formData.get("skipSorting") as string | null;
+    let playlistName = formData.get("playlistName") as string | null;
 
     // ERROR IF NEITHER A FILE NOR URL WERE GIVEN
     if (!url && (!(file instanceof Object) || !file.name || file.name.includes("/") || file.size == 0)) {
       emit("error", "");
       emit("error", "Invalid file or URL");
       return fail(422, { error: true, message: "You must provide a valid file or URL" });
+    }
+
+    // ERROR IF PLAYLIST SHOULD BE CREATED BUT NO NAME WAS GIVEN
+    if (createPlaylist && !playlistName) {
+      emit("error", "");
+      emit("error", "You must enter a playlist name");
+      return fail(422, { error: true, message: "You must enter a playlist name" });
     }
 
     // CHECK SAVE PATH EXISTS
@@ -73,10 +80,12 @@ export const actions = {
       let filename = "";
       let files: string[] = [];
 
+      // YT-DLP START EVENT
       ytdl.once("spawn", (m: any) => {
         console.log("spawned");
       });
 
+      // EMIT YT-DLP EVENTS FROM STDOUT
       ytdl.stdout?.on("data", (z: string) => {
         console.log(`\nstdout:\n${z}`);
         if (z.match(/Extracting URL/)) {
@@ -102,6 +111,7 @@ export const actions = {
         }
       });
 
+      // WATCH FOR ERRORS
       ytdl.stderr?.once("data", (z: any) => {
         if (z.includes("is not a valid URL")) {
           error = true;
@@ -114,6 +124,7 @@ export const actions = {
         console.log(z);
       });
 
+      // AWAIT YT-DLP
       await new Promise((resolve, reject) => {
         ytdl.once("close", (z: any) => {
           console.log("closed");
@@ -121,6 +132,9 @@ export const actions = {
           resolve(z);
         });
       });
+
+      // CHECK IF USER WANTED TO CREATE PLAYLISTS
+      if (createPlaylist) { }
 
       // CREATE FOLDERS IF THEY DONT EXIST
       if (!existsSync(env.LIBRARY_FOLDER)) {
@@ -195,7 +209,13 @@ export const actions = {
                   }
                 }
               }
-            }
+            },
+            playlists: createPlaylist ? {
+              create: {
+                name: playlistName!,
+                ownerId: user.id
+              }
+            } : undefined
           }
         });
       }
