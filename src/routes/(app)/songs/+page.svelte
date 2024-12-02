@@ -4,6 +4,8 @@
   import type { ClientData } from "$lib/types";
 
   const { data }: { data: ClientData } = $props();
+
+  let selectedSongs: number[] = $state([]);
 </script>
 
 <div class="page-title">All Songs</div>
@@ -16,6 +18,19 @@
       <SongListing
         {song}
         currentlyPlaying={appState.nowPlaying?.id == song.id}
+        selected={selectedSongs.includes(song.id)}
+        handleClick={(e: MouseEvent) => {
+          if (e.ctrlKey || e.metaKey) {
+            if (selectedSongs.includes(song.id)) {
+              selectedSongs = selectedSongs.filter((id) => id != song.id);
+            } else {
+              selectedSongs.push(song.id);
+            }
+          }
+          else {
+            selectedSongs = [song.id];
+          }
+        }}
       />
     {/each}
   </div>

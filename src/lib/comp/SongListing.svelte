@@ -5,6 +5,8 @@
   const {
     song,
     currentlyPlaying = false,
+    selected = false,
+    handleClick = () => null
   }: {
     song?: Prisma.songGetPayload<{
       include: {
@@ -19,19 +21,37 @@
       };
     }>;
     currentlyPlaying?: boolean;
+    selected?: boolean;
+    handleClick?: (e: MouseEvent) => any
   } = $props();
 </script>
 
 {#if song}
   <button
     class="song-listing nostyle"
-    class:playing={currentlyPlaying}
+    class:is-playing={currentlyPlaying}
+    class:is-selected={selected}
     onclick={(e: MouseEvent) => {
+      // MAKE SURE THEY DIDNT CLICK A LINK
       // @ts-expect-error Don't know why it complains about this
-      if (e.target?.localName != "a") {
-        e.preventDefault();
-        appState.nowPlaying = song;
+      if (e.target?.localName == "a") {
+        return;
       }
+
+      // HANDLE CLICK
+      e.preventDefault();
+      handleClick(e);
+    }}
+    ondblclick={(e: MouseEvent) => {
+      // MAKE SURE THEY DIDNT CLICK A LINK
+      // @ts-expect-error Don't know why it complains about this
+      if (e.target?.localName == "a") {
+        return;
+      }
+
+      // PLAY SONG
+      e.preventDefault();
+      appState.nowPlaying = song;
     }}
   >
     <!-- SELECTED -->
@@ -67,7 +87,7 @@
           class="star icon"
           style:color={(song.ratings[0]?.rating || 0) > i
             ? "var(--lime)"
-            : currentlyPlaying
+            : currentlyPlaying || selected
               ? "var(--black)"
               : "var(--jet)"}
         >
@@ -104,7 +124,7 @@
     border-top: 1px solid var(--jet);
   }
 
-  .playing {
+  .is-selected {
     background: var(--jet);
   }
 
