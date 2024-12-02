@@ -2,6 +2,7 @@ import type { Prisma } from "@prisma/client";
 
 export const appState: {
   subnav: string;
+  selectedSongs: number[];
   nowPlaying?: Prisma.songGetPayload<{include: {
     album: true,
     artists: true,
@@ -14,5 +15,6 @@ export const appState: {
   }}> & { cover?: string; };
 } = $state({
   subnav: "",
+  selectedSongs: [],
   nowPlaying: undefined
 });

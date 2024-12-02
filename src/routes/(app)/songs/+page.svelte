@@ -5,7 +5,7 @@
 
   const { data }: { data: ClientData } = $props();
 
-  let selectedSongs: number[] = $state([]);
+  // let appState.selectedSongs: number[] = $state([]);
   let lastClicked: number | undefined = $state();
 </script>
 
@@ -19,17 +19,9 @@
       <SongListing
         {song}
         currentlyPlaying={appState.nowPlaying?.id == song.id}
-        selected={selectedSongs.includes(song.id)}
+        selected={appState.selectedSongs.includes(song.id)}
         handleClick={(e: MouseEvent) => {
-          if (e.ctrlKey || e.metaKey) {
-            if (selectedSongs.includes(song.id)) {
-              selectedSongs = selectedSongs.filter((id) => id != song.id);
-              lastClicked = undefined;
-            } else {
-              selectedSongs.push(song.id);
-              lastClicked = index;
-            }
-          } else if (e.shiftKey && lastClicked) {
+          if (e.shiftKey && lastClicked) {
             let songsToAdd;
             if (index < lastClicked) {
               songsToAdd = data.songs?.slice(index, lastClicked);
@@ -38,12 +30,22 @@
             }
 
             songsToAdd?.forEach((s) => {
-              if (!selectedSongs.includes(s.id)) {
-                selectedSongs.push(s.id);
+              if (!appState.selectedSongs.includes(s.id)) {
+                appState.selectedSongs.push(s.id);
               }
             });
+          } else if (e.ctrlKey || e.metaKey) {
+            if (appState.selectedSongs.includes(song.id)) {
+              appState.selectedSongs = appState.selectedSongs.filter(
+                (id) => id != song.id,
+              );
+              lastClicked = undefined;
+            } else {
+              appState.selectedSongs.push(song.id);
+              lastClicked = index;
+            }
           } else {
-            selectedSongs = [song.id];
+            appState.selectedSongs = [song.id];
             lastClicked = index;
           }
         }}
