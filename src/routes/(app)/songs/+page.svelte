@@ -19,7 +19,7 @@
       <SongListing
         {song}
         currentlyPlaying={appState.nowPlaying?.id == song.id}
-        selected={appState.selectedSongs.includes(song.id)}
+        selected={appState.selectedSongs.map((s) => s.id).includes(song.id)}
         handleClick={(e: MouseEvent) => {
           if (e.shiftKey && lastClicked) {
             let songsToAdd;
@@ -30,22 +30,22 @@
             }
 
             songsToAdd?.forEach((s) => {
-              if (!appState.selectedSongs.includes(s.id)) {
-                appState.selectedSongs.push(s.id);
+              if (!appState.selectedSongs.map((ss) => ss.id).includes(s.id)) {
+                appState.selectedSongs.push(s);
               }
             });
           } else if (e.ctrlKey || e.metaKey) {
-            if (appState.selectedSongs.includes(song.id)) {
+            if (appState.selectedSongs.map((s) => s.id).includes(song.id)) {
               appState.selectedSongs = appState.selectedSongs.filter(
-                (id) => id != song.id,
+                (s) => s.id != song.id,
               );
               lastClicked = undefined;
             } else {
-              appState.selectedSongs.push(song.id);
+              appState.selectedSongs.push(song);
               lastClicked = index;
             }
           } else {
-            appState.selectedSongs = [song.id];
+            appState.selectedSongs = [song];
             lastClicked = index;
           }
         }}
