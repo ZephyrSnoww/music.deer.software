@@ -34,8 +34,7 @@
     data-type="song"
     onclick={(e: MouseEvent) => {
       // MAKE SURE THEY DIDNT CLICK A LINK
-      // @ts-expect-error Don't know why it complains about this
-      if (e.target?.localName == "a") {
+      if ((e.target as HTMLElement).localName == "a") {
         return;
       }
 
@@ -45,8 +44,7 @@
     }}
     ondblclick={(e: MouseEvent) => {
       // MAKE SURE THEY DIDNT CLICK A LINK
-      // @ts-expect-error Don't know why it complains about this
-      if (e.target?.localName == "a") {
+      if ((e.target as HTMLElement).localName == "a") {
         return;
       }
 
