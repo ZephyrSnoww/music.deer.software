@@ -1,6 +1,6 @@
 <script>
   import { appState } from "$lib/state.svelte";
-  import NavButton from "$lib/comp/layout/NavButton.svelte";
+  import NavButton from "$lib/comp/layout/Nav/NavButton.svelte";
 </script>
 
 <!-- TODO Add subnav toggleability (probably using stores?) -->

@@ -5,12 +5,12 @@
   import { source } from "sveltekit-sse";
   import "../generic.css";
 
-  import Nav from "$lib/comp/layout/Nav.svelte";
-  import Playbar from "$lib/comp/layout/Playbar.svelte";
-  import Search from "$lib/comp/layout/Search.svelte";
-  import Subnav from "$lib/comp/layout/Subnav.svelte";
+  import Nav from "$lib/comp/layout/Nav/Nav.svelte";
+  import Playbar from "$lib/comp/layout/Nav/Playbar/Playbar.svelte";
+  import Search from "$lib/comp/layout/Nav/Search.svelte";
+  import Subnav from "$lib/comp/layout/Nav/Subnav.svelte";
   import { fade } from "svelte/transition";
-  import RightClickMenu from "$lib/comp/layout/RightClickMenu.svelte";
+  import RightClickMenu from "$lib/comp/layout/ContextMenu/RightClickMenu.svelte";
 
   let { children, data }: { children: () => any; data: ClientData } = $props();
 
