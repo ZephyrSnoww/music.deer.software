@@ -9,7 +9,7 @@
   oncontextmenu={(e: MouseEvent) => {
     if (e.ctrlKey || e.metaKey) return;
 
-    if ((e.target as HTMLElement).closest(`[data-type="song-listing"]`)) {
+    else if ((e.target as HTMLElement).closest(`[data-type="song"]`)) {
       e.preventDefault();
       if (appState.selectedSongs.length <= 1) (e.target as HTMLElement).click();
       pos = { x: e.clientX, y: e.clientY };

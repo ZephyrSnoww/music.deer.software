@@ -31,7 +31,7 @@
     class="song-listing nostyle"
     class:is-playing={currentlyPlaying}
     class:is-selected={selected}
-    data-type="song-listing"
+    data-type="song"
     onclick={(e: MouseEvent) => {
       // MAKE SURE THEY DIDNT CLICK A LINK
       // @ts-expect-error Don't know why it complains about this
