@@ -19,7 +19,7 @@
 
     if (hasDataType) {
       e.preventDefault();
-      if (appState.selectedSongs.length <= 1) (e.target as HTMLElement).click();
+      if (appState.selectedSongs.length <= 1) ((e.target as HTMLElement).closest(`:not(a)`) as HTMLElement).click();
       pos = { x: e.clientX, y: e.clientY };
       open = true;
 
@@ -50,7 +50,8 @@
   <div
     id="right-click-menu"
     data-type="context-menu"
-    style:transform={`translate(${pos.x}px, ${pos.y}px)`}
+    style:top={`${pos.y}px`}
+    style:left={`${pos.x}px`}
   >
     {#if type == "song"}
       <SongMenu />
@@ -69,6 +70,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-y: scroll;
   }
 
   :global(#right-click-menu > *) {
