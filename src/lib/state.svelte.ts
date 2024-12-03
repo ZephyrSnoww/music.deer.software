@@ -26,8 +26,21 @@ export const appState: {
       uploader: true
     }
   }>;
+  songToEdit?: Prisma.songGetPayload<{
+    include: {
+      album: true,
+      artists: true,
+      favoritedBy: true,
+      playData: true,
+      playlists: true,
+      ratings: true,
+      tags: true,
+      uploader: true
+    }
+  }>;
 } = $state({
   subnav: "",
   selectedSongs: [],
-  nowPlaying: undefined
+  nowPlaying: undefined,
+  songToEdit: undefined
 });

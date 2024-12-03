@@ -57,12 +57,24 @@
 
     {#if appState.selectedSongs.length == 1}
       <!-- ARTIST BUTTON -->
-      <a href={`/artists/${appState.selectedSongs[0].artists[0].name}`}>Go to artist</a>
+      <a href={`/artists/${appState.selectedSongs[0].artists[0].name}`}>
+        Go to artist
+      </a>
       
       <!-- ALBUM BUTTON -->
-      <a href={`/albums/${appState.selectedSongs[0].album.name}`}>Go to album</a>
+      <a href={`/albums/${appState.selectedSongs[0].album.name}`}>
+        Go to album
+      </a>
       
       <!-- EDIT BUTTON -->
+      <button
+        class="nostyle"
+        onclick={(e) => {
+          appState.songToEdit = appState.selectedSongs[0];
+        }}
+      >
+        Edit "{appState.selectedSongs[0].title}"
+      </button>
     {/if}
   </div>
 {/if}
