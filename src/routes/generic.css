@@ -78,12 +78,12 @@ input:not(.nostyle),
   transition-property: filter;
 }
 
-input:not(.nostyle),
+input:not(.nostyle):hover,
 .input:hover {
   filter: brightness(0.85);
 }
 
-input:not(.nostyle),
+input:not(.nostyle):focus,
 .input:focus {
   filter: brightness(1);
 }
@@ -99,7 +99,7 @@ button:not(.nostyle),
   filter: brightness(0.7);
 }
 
-button:not(.nostyle),
+button:not(.nostyle):hover,
 .button:hover {
   filter: brightness(1);
 }
