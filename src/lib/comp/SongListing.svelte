@@ -60,12 +60,12 @@
     <div class="title">{song.title}</div>
 
     <!-- ALBUM -->
-    <div class="album">
+    <div class="album" data-type="album">
       <a href={`/albums/${song.album.name}`}>{song.album.name}</a>
     </div>
 
     <!-- ARTISTS -->
-    <div class="artists">
+    <div class="artists" data-type="artist">
       {#each song.artists as artist}
         <a href={`/artists/${artist.name}`} class="artist">{artist.name}</a>
       {/each}
