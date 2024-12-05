@@ -64,7 +64,7 @@
 
   <div id="content-container">
     {#if appState.subnav}
-      <Subnav />
+      <Subnav {data} />
     {/if}
 
     <div id="content">
