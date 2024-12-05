@@ -60,5 +60,20 @@ export async function load({ cookies, depends }) {
     }
   });
 
+  data.playlists = await db.playlist.findMany({
+    where: {
+      OR: [
+        { ownerId: data.account.id },
+        { editors: { some: { id: data.account.id } } }
+      ]
+    },
+    include: {
+      _count: { select: { songs: true } },
+      owner: true,
+      editors: true,
+      songs: true
+    }
+  });
+
   return data;
 }

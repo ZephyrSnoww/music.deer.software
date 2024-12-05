@@ -35,4 +35,12 @@ export interface ClientData {
       artists: true
     }
   }>[];
+  playlists?: Prisma.playlistGetPayload<{
+    include: {
+      _count: { select: { songs: true } },
+      owner: true,
+      editors: true,
+      songs: true
+    }
+  }>[];
 }
