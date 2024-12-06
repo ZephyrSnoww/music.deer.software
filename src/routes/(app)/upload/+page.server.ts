@@ -3,7 +3,7 @@ import { clients } from "$lib/clients.js";
 import { db } from "$lib/db.js";
 import { fail, redirect } from "@sveltejs/kit";
 import { exec } from "child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "fs";
 import MP3Tag from "mp3tag.js";
 
 export const actions = {
@@ -102,8 +102,8 @@ export const actions = {
           emit("upload", "");
           emit("upload", "Fetching data");
         }
-        else if (z.match(/\[download\] Destination: \.\/music\/unsorted\/(.+)/)) {
-          filename = z.match(/\[download\] Destination: \.\/music\/unsorted\/(.+)/)?.[1] || "";
+        else if (z.match(/\[download\] Destination: (.*?)music[\/\\]unsorted[\/\\](.+)/)) {
+          filename = z.match(/\[download\] Destination: (.*?)music[\/\\]unsorted[\/\\](.+)/)?.[2] || "";
         }
         else if (z.match(/\[download\](.+)% of /)) {
           emit("upload", `Downloading${filename ? ` ${filename}` : ""}<br />${z.match(/\[download\](.+%) of /)?.[1]}`);
@@ -112,9 +112,9 @@ export const actions = {
           z.match(/\[ExtractAudio\] Destination:/) ||
           z.match(/\[ExtractAudio\] Not converting audio/)
         ) {
-          filename = z.match(/\[ExtractAudio\] Destination: \.\/music\/unsorted\/(.+)/)?.[1] || "";
+          filename = z.match(/\[ExtractAudio\] Destination: (.*?)music[\/\\]unsorted[\/\\](.+)/)?.[1] || "";
           if (!filename) {
-            filename = z.match(/\[ExtractAudio\] Not converting audio \.\/music\/unsorted\/(.+?); file is already in target format/)?.[1] || "";
+            filename = z.match(/\[ExtractAudio\] Not converting audio (.*?)music[\/\\]unsorted[\/\\](.+?); file is already in target format/)?.[2] || "";
           }
           emit("upload", `Saving ${filename ? filename : "file"}`);
           files.push(filename);
@@ -153,115 +153,130 @@ export const actions = {
 
       for (const file of files) {
         emit("upload", `Reading tags from ${file}`);
-        let tags = new MP3Tag(readFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`)).read();
+        try {
+          let tags = new MP3Tag(readFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`)).read();
 
-        let title = tags.v2?.TIT2;
-        let artist = tags.v2?.TPE1;
-        let album = tags.v2?.TALB || title;
-        let year = tags.v2?.TYER;
-        let genre = tags.v2?.TCON;
-        let trackNum = tags.v2?.TRCK;
-        let url = tags.v2?.TXXX?.find((t) => t.description == "purl")?.text;
-        // ALBUM ARTISTS
-        // DISC NUM
-        // COMMENTS?
+          let title = tags.v2?.TIT2;
+          let artist = tags.v2?.TPE1;
+          let album = tags.v2?.TALB || title;
+          let year = tags.v2?.TYER;
+          let genre = tags.v2?.TCON;
+          let trackNum = tags.v2?.TRCK;
+          let url = tags.v2?.TXXX?.find((t) => t.description == "purl")?.text;
+          // ALBUM ARTISTS
+          // DISC NUM
+          // COMMENTS?
 
-        // MAKE SURE SONG ISN'T ALREADY IN DATABASE
-        const songInDB = await db.song.findUnique({
-          where: {
-            filename: `${artist} - ${title}.mp3`,
-            releaseDate: new Date(year || 0)
-          }
-        });
-        if (songInDB) {
-          if (files.length == 1) {
-            emit("error", "");
-            emit("error", "Song already exists on server");
-            return fail(422, { error: true, message: "Song already exists on server" });
-          }
+          // MAKE SURE SONG ISN'T ALREADY IN DATABASE
+          const songInDB = await db.song.findUnique({
+            where: {
+              filename: `${artist} - ${title}.mp3`,
+              releaseDate: new Date(year || 0)
+            }
+          });
+          if (songInDB) {
+            if (files.length == 1) {
+              emit("error", "");
+              emit("error", "Song already exists on server");
+              return fail(422, { error: true, message: "Song already exists on server" });
+            }
 
-          if (createPlaylist) {
-            await db.song.update({
-              where: { id: songInDB.id },
-              data: {
-                playlists: {
-                  connectOrCreate: {
-                    where: { name: playlistName! },
-                    create: {
-                      name: playlistName!,
-                      ownerId: user.id
-                    }
-                  }
-                }
-              }
-            });
-          }
-
-          continue;
-        }
-
-        // MAKE SURE FILENAME ISNT TAKEN
-        emit("upload", "Making sure filename isn't taken");
-        let existingFiles = readdirSync(`${env.LIBRARY_FOLDER}/library`);
-        let oldFilename = file;
-        let baseFilename = `${artist} - ${title}`;
-        let newFilename = baseFilename;
-
-        while (existingFiles.includes(`${newFilename}.mp3`)) {
-          newFilename = `${baseFilename}-${Math.floor(Math.random() * 10000)}`;
-        }
-
-        // MOVE FILE
-        emit("upload", `Renaming and moving ${oldFilename}`);
-        renameSync(`${env.LIBRARY_FOLDER}/unsorted/${oldFilename}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
-
-        // ADD TO DATABASE
-        emit("upload", `Adding ${newFilename} to database`);
-        let song = await db.song.create({
-          data: {
-            filename: `${newFilename}.mp3`,
-            releaseDate: new Date(year || 0),
-            title: title || "Unknown Title",
-            uploader: { connect: { id: user.id } },
-            url: url,
-            trackNumber: Number(trackNum) || 1,
-            album: {
-              connectOrCreate: {
-                where: { name: album || "Unknown Album" },
-                create: {
-                  name: album || "Unknown Album",
-                  releaseDate: new Date(year || 0)
-                }
-              }
-            },
-            artists: {
-              connectOrCreate: {
-                where: { name: artist || "Unknown Artist" },
-                create: {
-                  name: artist || "Unknown Artist",
-                  albums: {
+            if (createPlaylist) {
+              await db.song.update({
+                where: { id: songInDB.id },
+                data: {
+                  playlists: {
                     connectOrCreate: {
-                      where: { name: album || "Unknown Album" },
+                      where: { name: playlistName! },
                       create: {
-                        name: album || "Unknown Album",
-                        releaseDate: new Date(year || 0)
+                        name: playlistName!,
+                        ownerId: user.id
                       }
                     }
                   }
                 }
-              }
-            },
-            playlists: createPlaylist ? {
-              connectOrCreate: {
-                where: { name: playlistName! },
-                create: {
-                  name: playlistName!,
-                  ownerId: user.id
-                }
-              }
-            } : undefined
+              });
+            }
+
+            emit("error", "");
+            emit("error", `${file} is already on the server, skipping...`);
+
+            try {
+              await rmSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`);
+            }
+            catch (e) {
+              emit("error", "");
+              emit("error", `Failed to remove ${file} from unsorted folder, check files page`);
+            }
+
+            continue;
           }
-        });
+
+          // MAKE SURE FILENAME ISNT TAKEN
+          emit("upload", "Making sure filename isn't taken");
+          let existingFiles = readdirSync(`${env.LIBRARY_FOLDER}/library`);
+          let oldFilename = file;
+          let baseFilename = `${artist} - ${title}`;
+          let newFilename = baseFilename;
+
+          while (existingFiles.includes(`${newFilename}.mp3`)) {
+            newFilename = `${baseFilename}-${Math.floor(Math.random() * 10000)}`;
+          }
+
+          // MOVE FILE
+          emit("upload", `Renaming and moving ${oldFilename}`);
+          renameSync(`${env.LIBRARY_FOLDER}/unsorted/${oldFilename}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
+
+          // ADD TO DATABASE
+          emit("upload", `Adding ${newFilename} to database`);
+          let song = await db.song.create({
+            data: {
+              filename: `${newFilename}.mp3`,
+              releaseDate: new Date(year || 0),
+              title: title || "Unknown Title",
+              uploader: { connect: { id: user.id } },
+              url: url,
+              trackNumber: Number(trackNum) || 1,
+              album: {
+                connectOrCreate: {
+                  where: { name: album || "Unknown Album" },
+                  create: {
+                    name: album || "Unknown Album",
+                    releaseDate: new Date(year || 0),
+                    artists: {
+                      connectOrCreate: {
+                        where: { name: artist || "Unknown Artist" },
+                        create: {
+                          name: artist || "Unknown Artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              artists: {
+                connectOrCreate: {
+                  where: { name: artist || "Unknown Artist" },
+                  create: {
+                    name: artist || "Unknown Artist"
+                  }
+                }
+              },
+              playlists: createPlaylist ? {
+                connectOrCreate: {
+                  where: { name: playlistName! },
+                  create: {
+                    name: playlistName!,
+                    ownerId: user.id
+                  }
+                }
+              } : undefined
+            }
+          });
+        } catch (e) {
+          emit("error", "");
+          emit("error", `Failed to add ${file} to server. Check files page`);
+        }
       }
 
       emit("generic", "");
