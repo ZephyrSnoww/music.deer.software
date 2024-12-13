@@ -5,6 +5,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import { exec } from "child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "fs";
 import MP3Tag from "mp3tag.js";
+import { findBestMatch } from "string-similarity";
 
 export const actions = {
   default: async ({ cookies, request }) => {
@@ -151,10 +152,23 @@ export const actions = {
         mkdirSync(`${env.LIBRARY_FOLDER}/library`);
       }
 
-      for (const file of files) {
+      const allUnsortedFiles = readdirSync(`${env.LIBRARY_FOLDER}/unsorted`);
+
+      console.log(allUnsortedFiles);
+
+      for (let file of files) {
         emit("upload", `Reading tags from ${file}`);
         try {
-          let tags = new MP3Tag(readFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`)).read();
+          let readFile;
+
+          try {
+            readFile = readFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`);
+          } catch (e) {
+            file = findBestMatch(file, allUnsortedFiles).bestMatch.target;
+            readFile = readFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`);
+          }
+
+          let tags = new MP3Tag(readFile).read();
 
           let title = tags.v2?.TIT2;
           let artist = tags.v2?.TPE1;
@@ -215,7 +229,7 @@ export const actions = {
           // MAKE SURE FILENAME ISNT TAKEN
           emit("upload", "Making sure filename isn't taken");
           let existingFiles = readdirSync(`${env.LIBRARY_FOLDER}/library`);
-          let oldFilename = file;
+          // let oldFilename = file;
           let baseFilename = `${artist} - ${title}`;
           let newFilename = baseFilename;
 
@@ -224,8 +238,8 @@ export const actions = {
           }
 
           // MOVE FILE
-          emit("upload", `Renaming and moving ${oldFilename}`);
-          renameSync(`${env.LIBRARY_FOLDER}/unsorted/${oldFilename}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
+          emit("upload", `Renaming and moving ${file}`);
+          renameSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
 
           // ADD TO DATABASE
           emit("upload", `Adding ${newFilename} to database`);
