@@ -5,8 +5,7 @@
   const {
     song,
     currentlyPlaying = false,
-    selected = false,
-    handleClick = () => null
+    handleClick = () => null,
   }: {
     song?: Prisma.songGetPayload<{
       include: {
@@ -21,9 +20,10 @@
       };
     }>;
     currentlyPlaying?: boolean;
-    selected?: boolean;
-    handleClick?: (e: MouseEvent) => any
+    handleClick?: (e: MouseEvent) => any;
   } = $props();
+
+  let selected = $derived(appState.selectedSongs.some((s) => s.id == song?.id));
 </script>
 
 {#if song}
@@ -42,7 +42,8 @@
       e.preventDefault();
       handleClick(e);
     }}
-    ondblclick={(e: MouseEvent) => {
+  >
+    <!-- ondblclick={(e: MouseEvent) => {
       // MAKE SURE THEY DIDNT CLICK A LINK
       if ((e.target as HTMLElement).localName == "a") {
         return;
@@ -51,8 +52,7 @@
       // PLAY SONG
       e.preventDefault();
       appState.nowPlaying = song;
-    }}
-  >
+    }} -->
     <!-- SELECTED -->
     <div class="selected">x</div>
 

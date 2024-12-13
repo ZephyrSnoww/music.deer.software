@@ -19,7 +19,6 @@
       <SongListing
         {song}
         currentlyPlaying={appState.nowPlaying?.id == song.id}
-        selected={appState.selectedSongs.map((s) => s.id).includes(song.id)}
         handleClick={(e: MouseEvent) => {
           if (e.shiftKey && lastClicked) {
             let songsToAdd;
