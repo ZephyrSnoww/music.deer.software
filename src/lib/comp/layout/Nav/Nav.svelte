@@ -40,6 +40,7 @@
 
   <NavButton href="/songs" label="Songs">music_note</NavButton>
   <NavButton href="/artists" label="Artists">person</NavButton>
+  <NavButton href="/albums" label="Albums">album</NavButton>
 
   <div class="spacer"></div>
 
