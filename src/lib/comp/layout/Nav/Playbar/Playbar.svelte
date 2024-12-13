@@ -10,6 +10,7 @@
 {#if appState.nowPlaying}
   <audio
     bind:this={audioPlayer}
+    bind:volume={appState.volume}
     src={`/file/${appState.nowPlaying?.filename}`}
     style:display="none"
     oncanplay={(e) => {

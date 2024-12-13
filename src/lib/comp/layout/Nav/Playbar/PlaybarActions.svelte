@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { appState } from "$lib/state.svelte";
 
   let {
@@ -7,14 +6,6 @@
   }: {
     audioPlayer?: HTMLAudioElement;
   } = $props();
-
-  let volume = $state(0);
-
-  onMount(() => {
-    setInterval(() => {
-      volume = audioPlayer?.volume || 0;
-    }, 50);
-  });
 
   function handleVolumeChange(e: MouseEvent) {
     if (audioPlayer) {
@@ -24,8 +15,7 @@
       }
 
       let pos = ((e.clientX - target.offsetLeft) / target.clientWidth);
-      console.log(pos);
-      audioPlayer.volume = pos;
+      appState.volume = pos;
     }
   }
 </script>
@@ -49,7 +39,7 @@
       <button id="volume-button" class="nostyle icon">volume_up</button>
       <!-- svelte-ignore a11y_consider_explicit_label -->
       <button class="nostyle" id="volume-slider" onclick={handleVolumeChange}>
-        <div id="volume-slider-value" style:width={`${volume * 100}%`}></div>
+        <div id="volume-slider-value" style:width={`${appState.volume * 100}%`}></div>
       </button>
     </div>
   </div>
