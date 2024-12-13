@@ -1,11 +1,14 @@
 <script lang="ts">
   import { formatTime } from "$lib";
+  import { appState } from "$lib/state.svelte";
   import { onMount } from "svelte";
 
   let {
     audioPlayer = $bindable(),
+    settings = $bindable(),
   }: {
     audioPlayer?: HTMLAudioElement;
+    settings: { shuffle: boolean; loop: boolean; loopOne: boolean };
   } = $props();
 
   let currentTime = $state(0);
@@ -33,8 +36,7 @@
     if (audioPlayer) {
       if (audioPlayer.paused) {
         audioPlayer.play();
-      }
-      else {
+      } else {
         audioPlayer.pause();
       }
     }
@@ -48,7 +50,10 @@
         target = target.parentElement!;
       }
 
-      let pos = Math.floor(((e.clientX - target.offsetLeft) / (target.clientWidth)) * 100) / 100;
+      let pos =
+        Math.floor(
+          ((e.clientX - target.offsetLeft) / target.clientWidth) * 100,
+        ) / 100;
       audioPlayer.currentTime = audioPlayer.duration * pos;
     }
   }
@@ -57,13 +62,25 @@
 <div id="playback-controls">
   <div id="controls">
     <!-- SHUFFLE -->
-    <button id="shuffle-button" class="nostyle icon">shuffle</button>
+    <button
+      id="shuffle-button"
+      class="nostyle icon"
+      class:enabled={settings.shuffle}
+      onclick={(e) => {
+        settings.shuffle = !settings.shuffle;
+        if (!settings.shuffle) appState.playedIndexes = [];
+      }}>shuffle</button
+    >
 
     <!-- PREVIOUS -->
     <button id="previous-button" class="nostyle icon">skip_previous</button>
 
     <!-- REWIND -->
-    <button id="skip-back-button" class="nostyle icon" onclick={() => handleScrubClick(-1)}>
+    <button
+      id="skip-back-button"
+      class="nostyle icon"
+      onclick={() => handleScrubClick(-1)}
+    >
       fast_rewind
     </button>
 
@@ -73,7 +90,11 @@
     </button>
 
     <!-- FAST FORWARD -->
-    <button id="skip-button" class="nostyle icon" onclick={() => handleScrubClick(1)}>
+    <button
+      id="skip-button"
+      class="nostyle icon"
+      onclick={() => handleScrubClick(1)}
+    >
       fast_forward
     </button>
 
@@ -81,7 +102,22 @@
     <button id="next-button" class="nostyle icon">skip_next</button>
 
     <!-- REPEAT -->
-    <button id="repeat-button" class="nostyle icon">repeat</button>
+    <button
+      id="repeat-button"
+      class="nostyle icon"
+      class:enabled={settings.loop || settings.loopOne}
+      onclick={(e) => {
+        if (settings.loopOne) {
+          settings.loopOne = false;
+          settings.loop = false;
+        } else if (!settings.loop) {
+          settings.loop = true;
+        } else if (!settings.loopOne) {
+          settings.loop = false;
+          settings.loopOne = true;
+        }
+      }}>{settings.loopOne ? "repeat_one" : "repeat"}</button
+    >
   </div>
 
   <div id="progress-bar-container">
@@ -141,5 +177,9 @@
 
   .time-text {
     margin-bottom: 0.15em;
+  }
+
+  .enabled {
+    color: var(--lime);
   }
 </style>

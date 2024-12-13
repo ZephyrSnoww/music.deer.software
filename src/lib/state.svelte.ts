@@ -27,6 +27,20 @@ export const appState: {
       uploader: true
     }
   }>;
+  nowPlayingIndex: number;
+  playedIndexes: number[];
+  queue: Prisma.songGetPayload<{
+    include: {
+      album: true,
+      artists: true,
+      favoritedBy: true,
+      playData: true,
+      playlists: true,
+      ratings: true,
+      tags: true,
+      uploader: true
+    }
+  }>[];
   songToEdit?: Prisma.songGetPayload<{
     include: {
       album: true,
@@ -44,5 +58,8 @@ export const appState: {
   volume: 0.5,
   selectedSongs: [],
   nowPlaying: undefined,
+  nowPlayingIndex: 0,
+  playedIndexes: [],
+  queue: [],
   songToEdit: undefined
 });

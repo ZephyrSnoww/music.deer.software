@@ -17,7 +17,9 @@
 </button>
 
 <!-- QUEUE BUTTON -->
-<button class="nostyle">
+<button class="nostyle" onclick={(e) => {
+  appState.queue = [...appState.queue, ...appState.selectedSongs];
+}}>
   Add {appState.selectedSongs.length > 1
     ? `${appState.selectedSongs.length} songs`
     : "song"} to queue

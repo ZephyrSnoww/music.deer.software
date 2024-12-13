@@ -6,6 +6,7 @@
     song,
     currentlyPlaying = false,
     handleClick = () => null,
+    handleDBClick = undefined,
   }: {
     song?: Prisma.songGetPayload<{
       include: {
@@ -21,6 +22,7 @@
     }>;
     currentlyPlaying?: boolean;
     handleClick?: (e: MouseEvent) => any;
+    handleDBClick?: (e: MouseEvent) => any;
   } = $props();
 
   let selected = $derived(appState.selectedSongs.some((s) => s.id == song?.id));
@@ -50,7 +52,14 @@
 
       // PLAY SONG
       e.preventDefault();
-      appState.nowPlaying = song;
+      if (handleDBClick) {
+        handleDBClick(e);
+      } else {
+        appState.queue = [song];
+        appState.playedIndexes = [];
+        appState.nowPlayingIndex = 0;
+        appState.nowPlaying = appState.queue[appState.nowPlayingIndex];
+      }
     }}
   >
     <!-- SELECTED -->
@@ -125,6 +134,10 @@
 
   .is-selected {
     background: var(--jet);
+  }
+
+  .is-playing {
+    border: 1px solid var(--lime);
   }
 
   .song-listing > div {
