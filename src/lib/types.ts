@@ -35,6 +35,13 @@ export interface ClientData {
       artists: true;
     }
   }>[];
+  artists?: Prisma.artistGetPayload<{
+    include: {
+      _count: { select: { albums: true, songs: true } };
+      songs: true;
+      albums: true;
+    }
+  }>[];
   playlists?: Prisma.playlistGetPayload<{
     include: {
       _count: { select: { songs: true } };
