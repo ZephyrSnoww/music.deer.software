@@ -3,7 +3,7 @@ import { clients } from "$lib/clients.js";
 import { db } from "$lib/db.js";
 import { fail, redirect } from "@sveltejs/kit";
 import { exec } from "child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "fs";
 import MP3Tag from "mp3tag.js";
 import { findBestMatch } from "string-similarity";
 
@@ -154,8 +154,6 @@ export const actions = {
 
       const allUnsortedFiles = readdirSync(`${env.LIBRARY_FOLDER}/unsorted`);
 
-      console.log(allUnsortedFiles);
-
       for (let file of files) {
         emit("upload", `Reading tags from ${file}`);
         try {
@@ -239,7 +237,13 @@ export const actions = {
 
           // MOVE FILE
           emit("upload", `Renaming and moving ${file}`);
-          renameSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
+          try {
+            renameSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
+          }
+          catch (e) {
+            copyFileSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`, `${env.LIBRARY_FOLDER}/library/${newFilename}.mp3`);
+            rmSync(`${env.LIBRARY_FOLDER}/unsorted/${file}`);
+          }
 
           // ADD TO DATABASE
           emit("upload", `Adding ${newFilename} to database`);
